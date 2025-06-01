@@ -7,7 +7,7 @@ export default function ProjectSection() {
   useEffect(() => {
     async function fetchProjects() {
       const { data, error } = await supabase
-        .from('projects')
+        .from('project')
         .select('*')
         .order('start_month', { ascending: false });
 

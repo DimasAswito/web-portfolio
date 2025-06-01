@@ -37,7 +37,14 @@ export default function EducationSection() {
                   {edu.jurusan}, {edu.nilai}
                 </p>
                 <p className="text-gray-400">{edu.location}</p>
-                {/* Optional: Add achievements or highlights here if needed */}
+                  <ul className="mt-4 space-y-2 text-gray-300">
+                    {(edu.description || []).map((point, i) => (
+                      <li key={i} className="flex items-start">
+                        <i className="fas fa-check text-primary mt-1 mr-2"></i>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
               </div>
             </div>
           ))}

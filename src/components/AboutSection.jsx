@@ -21,9 +21,9 @@ export default function AboutSection() {
       if (!error && data) {
         setAbout({
           description: data.description || [],
-          tags: data.tags || [],
-          skills: data.skills || [],
-          social_media: data.social_media || [],
+          tags: data.tag || [],
+          skills: data.skill || [],
+          social_media: data.socialMedia || [],
         });
       } else {
         console.error('Failed to fetch about data:', error);

@@ -65,7 +65,7 @@ export default function AboutSection() {
             </div>
           </div>
           <div className="md:w-1/2">
-            <div className="bg-dark rounded-xl p-8 shadow-lg">
+            <div className="bg-dark rounded-xl p-8 shadow-lg card-hover">
               <h3 className="text-xl font-semibold mb-6 text-primary">My Skills</h3>
               <div className="space-y-6">
                 {about.skills.map((skill, index) => (

@@ -103,3 +103,48 @@
     ::-webkit-scrollbar-thumb:hover {
         background: #3b82f6;
     }
+
+            .futuristic-text {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 15px rgba(56, 182, 255, 0.5);
+        }
+        
+        .glow-effect:hover {
+            box-shadow: 0 0 20px rgba(56, 182, 255, 0.8);
+        }
+        
+        .input-field {
+            background-color: rgba(20, 20, 40, 0.7);
+            border: 1px solid rgba(56, 182, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            border-color: rgba(56, 182, 255, 0.7);
+            background-color: rgba(30, 30, 60, 0.7);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(56, 182, 255, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(56, 182, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(56, 182, 255, 0);
+            }
+        }
+        
+        .cyber-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(56, 182, 255, 0.7), transparent);
+        }

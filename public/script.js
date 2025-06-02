@@ -69,4 +69,6 @@
         skillBars.forEach(bar => {
             observer.observe(bar);
         });
+
+        
         

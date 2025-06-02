@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dimas Aswito</title>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../src/index.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="gradient-bg min-h-screen">
@@ -17,109 +18,46 @@
     <div class="absolute top-1/2 left-1/2 w-3 h-3 rounded-full bg-blue-400/20 animate-float" style="animation-delay: 4s;"></div>
 </div>
 
-<!-- Navigation -->
-<nav class="fixed top-0 left-0 right-0 bg-dark/80 backdrop-blur-md z-50 shadow-lg">
-    <div class="container mx-auto px-6 py-4">
-        <div class="flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold gradient-text">DA.</a>
-            <div class="hidden md:flex space-x-8">
-                <a href="#home" class="nav-link active-nav">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#education" class="nav-link">Education</a>
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
-            <button class="md:hidden text-primary focus:outline-none" id="menu-toggle">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
-        </div>
-    </div>
-    <!-- Mobile Menu -->
-    <div class="md:hidden hidden bg-darker py-4 px-6" id="mobile-menu">
-        <div class="flex flex-col space-y-4">
-            <a href="#home" class="nav-link active-nav">Home</a>
-            <a href="#about" class="nav-link">About</a>
-            <a href="#education" class="nav-link">Education</a>
-            <a href="#experience" class="nav-link">Experience</a>
-            <a href="#projects" class="nav-link">Projects</a>
-            <a href="#contact" class="nav-link">Contact</a>
-        </div>
-    </div>
-</nav>
-
-
 <div id="root"></div>
 
 
-<!-- Footer -->
-<footer class="py-8 bg-dark border-t border-gray-800">
-    <div class="container mx-auto px-6">
-        <div class="flex flex-col md:flex-row justify-between items-center">
-            <div class="mb-4 md:mb-0">
-                <a href="#" class="text-2xl font-bold gradient-text">DA.</a>
-            </div>
-            <div class="flex space-x-6 mb-4 md:mb-0">
-                <a href="#home" class="text-gray-400 hover:text-primary transition duration-300">Home</a>
-                <a href="#about" class="text-gray-400 hover:text-primary transition duration-300">About</a>
-                <a href="#education" class="text-gray-400 hover:text-primary transition duration-300">Education</a>
-                <a href="#experience" class="text-gray-400 hover:text-primary transition duration-300">Experience</a>
-                <a href="#projects" class="text-gray-400 hover:text-primary transition duration-300">Projects</a>
-                <a href="#contact" class="text-gray-400 hover:text-primary transition duration-300">Contact</a>
-            </div>
-            <div class="flex space-x-4">
-                <a href="https://www.linkedin.com/in/aswito-406ab0216/" target="_blank" class="text-xl text-gray-400 hover:text-primary transition duration-300">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="mailto:dimasaswito@gmail.com" class="text-xl text-gray-400 hover:text-primary transition duration-300">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <a href="tel:082116848487" class="text-xl text-gray-400 hover:text-primary transition duration-300">
-                    <i class="fas fa-phone"></i>
-                </a>
-            </div>
-        </div>
-        <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500">
-            <p>&copy; 2024 Dimas Aswito. All rights reserved.</p>
-        </div>
-    </div>
-    </footer>
-    <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../src/supabaseClient.js"></script>
-    <script src ="script.js"></script>
-    <script>
-    tailwind.config = {
-        theme: {
-            extend: {
-                colors: {
-                    primary: '#0ea5e9',
-                    dark: '#0f172a',
-                    darker: '#020617',
-                    light: '#f8fafc'
+<script src ="script.js"></script>
+<script src ="../src/index.js"></script>
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                primary: '#0ea5e9',
+                dark: '#0f172a',
+                darker: '#020617',
+                light: '#f8fafc'
+            },
+            fontFamily: {
+                sans: ['Inter', 'sans-serif'],
+                mono: ['Fira Code', 'monospace']
+            },
+            animation: {
+                'float': 'float 6s ease-in-out infinite',
+                'gradient': 'gradient 8s ease infinite',
+                'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+            },
+            keyframes: {
+                float: {
+                    '0%, 100%': { transform: 'translateY(0)' },
+                    '50%': { transform: 'translateY(-20px)' },
                 },
-                fontFamily: {
-                    sans: ['Inter', 'sans-serif'],
-                    mono: ['Fira Code', 'monospace']
-                },
-                animation: {
-                    'float': 'float 6s ease-in-out infinite',
-                    'gradient': 'gradient 8s ease infinite',
-                    'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-                },
-                keyframes: {
-                    float: {
-                        '0%, 100%': { transform: 'translateY(0)' },
-                        '50%': { transform: 'translateY(-20px)' },
-                    },
-                    gradient: {
-                        '0%, 100%': { 'background-position': '0% 50%' },
-                        '50%': { 'background-position': '100% 50%' },
-                    }
+                gradient: {
+                    '0%, 100%': { 'background-position': '0% 50%' },
+                    '50%': { 'background-position': '100% 50%' },
                 }
             }
         }
     }
+}
 </script>
 </body>
 </html>

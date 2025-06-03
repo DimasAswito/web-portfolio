@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { LogOut, User, LayoutDashboard, Image, Info, GraduationCap, Briefcase, Folder, Mail, HelpCircle } from "lucide-react"
+import { LogOut, LayoutDashboard, Image, Info, GraduationCap, Briefcase, Folder, Mail, HelpCircle } from "lucide-react"
 // import { Button } from "@/components/ui/button"
 import { Link, useLocation } from "react-router-dom"
 import { supabase } from '../supabaseClient';
@@ -19,6 +19,7 @@ export default function Sidebar() {
   const [session, setSession] = useState(null)
   const location = useLocation()
   const [showMenu, setShowMenu] = useState(false)
+  const [photoUrl, setPhotoUrl] = useState("");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -28,6 +29,14 @@ export default function Sidebar() {
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
+
+      const fetchPhoto = async () => {
+    const { data } = await supabase.from("header").select("photo_url").single();
+    if (data && data.photo_url) {
+      setPhotoUrl(data.photo_url);
+    }
+  };
+  fetchPhoto();
 
     return () => {
       listener.subscription.unsubscribe()
@@ -62,7 +71,7 @@ export default function Sidebar() {
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
         <img
-          src="/photo_2.jpg"
+          src={photoUrl || "/photo_2.jpg"}
           alt="Profile"
           className="w-10 h-10 rounded-full object-cover"
         />

@@ -17,6 +17,14 @@ import ContactSection from './components/ContactSection';
 // Komponen admin
 import Login from './admin/Login';
 import Dashboard from './admin/Dashboard';
+import HeroAdmin from './admin/HeroAdmin';
+import AboutAdmin from './admin/AboutAdmin';
+import EducationAdmin from './admin/EducationAdmin';
+import ExperienceAdmin from './admin/ExperienceAdmin';
+import ProjectsAdmin from './admin/ProjectAdmin';
+import CertificateAdmin from './admin/CertificateAdmin';
+import ContactAdmin from './admin/ContactAdmin';
+import QnAAdmin from './admin/QnAAdmin';
 
 function App() {
   return (
@@ -43,6 +51,55 @@ function App() {
             <Dashboard />
           </AdminLayout>
         } />
+
+        <Route path="/admin/hero" element={
+          <AdminLayout>
+            <HeroAdmin />
+          </AdminLayout>
+        } />
+
+        <Route path="/admin/about" element={
+          <AdminLayout>
+            <AboutAdmin />
+          </AdminLayout>
+        } />
+
+        <Route path="/admin/education" element={
+          <AdminLayout>
+            <EducationAdmin />
+          </AdminLayout>
+        } />
+
+        <Route path="/admin/experience" element={
+          <AdminLayout>
+            <ExperienceAdmin />
+          </AdminLayout>
+        } />
+
+        <Route path="/admin/project" element={
+          <AdminLayout>
+            <ProjectsAdmin />
+          </AdminLayout>
+        } />
+
+        <Route path="/admin/certificate" element={
+          <AdminLayout>
+            <CertificateAdmin />
+          </AdminLayout>
+        } />
+
+        <Route path="/admin/contact" element={
+          <AdminLayout>
+            <ContactAdmin />
+          </AdminLayout>
+        } />
+
+        <Route path="/admin/qna" element={
+          <AdminLayout>
+            <QnAAdmin />
+          </AdminLayout>
+        } />
+
       </Routes>
     </Router>
   );

@@ -119,7 +119,6 @@ const Login = () => {
             <div className="mt-8">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-700"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
                   <span className="px-2 bg-gray-800 text-gray-400 mb-5">Or continue with</span>
@@ -130,7 +129,7 @@ const Login = () => {
                   supabase.auth.signInWithOAuth({
                     provider: 'google',
                     options: {
-                      redirectTo: `${window.location.origin}/admin/dashboard`, // arahkan ke dashboard
+                      redirectTo: `${window.location.origin}/admin/dashboard`,
                     },
                   })
                 }

@@ -37,14 +37,25 @@ export default function EducationSection() {
                   {edu.jurusan}, {edu.nilai}
                 </p>
                 <p className="text-gray-400">{edu.location}</p>
-                  <ul className="mt-4 space-y-2 text-gray-300">
-                    {(edu.description || []).map((point, i) => (
-                      <li key={i} className="flex items-start">
-                        <i className="fas fa-check text-primary mt-1 mr-2"></i>
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {(() => {
+                    if (!Array.isArray(edu.description)) {
+                      return null;
+                    }
+                    const validDescriptionPoints = edu.description.filter(point => point && point.trim() !== "");
+                    if (validDescriptionPoints.length === 0) {
+                      return null;
+                    }
+                    return (
+                      <ul className="mt-4 space-y-2 text-gray-300">
+                        {validDescriptionPoints.map((point, i) => (
+                          <li key={i} className="flex items-start">
+                            <i className="fas fa-check text-primary mt-1 mr-2"></i>
+                            <span>{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                  })()}
               </div>
             </div>
           ))}

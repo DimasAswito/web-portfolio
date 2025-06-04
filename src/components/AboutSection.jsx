@@ -7,6 +7,8 @@ const iconMap = {
   phone: 'fas fa-phone',
 };
 
+  const GITHUB_USERNAME = 'DimasAswito';
+
 export default function AboutSection() {
   const [about, setAbout] = useState({
     description: [],
@@ -86,6 +88,45 @@ export default function AboutSection() {
             </div>
           </div>
         </div>
+        <div className="mt-20 flex flex-col items-center text-center">
+  {/* Penjelasan:
+    - `flex flex-col items-center`: Membuat div ini menjadi flex container, 
+      menyusun anak-anaknya secara vertikal (flex-col), dan memusatkan mereka secara horizontal (items-center).
+    - `text-center`: Memusatkan teks di dalam elemen ini dan anak-anaknya (berguna untuk h3 dan h5).
+  */}
+  <h3 className="text-2xl md:text-3xl font-bold mb-8 gradient-text">
+    {/* text-center sudah ada di sini, jadi gradient-text akan terpusat */}
+    My GitHub Contributions
+  </h3>
+
+  {/* Wrapper untuk mengontrol ukuran dan pemusatan gambar */}
+  <div className="w-full max-w-xl md:max-w-2xl lg:max-w-3xl px-4">
+    {/* Penjelasan Wrapper Gambar:
+      - `w-full`: Mengambil lebar penuh dari kontainer induknya (yang dibatasi oleh layout halaman Anda).
+      - `max-w-xl md:max-w-2xl lg:max-w-3xl`: Ini yang akan membuat gambar Anda "lebih besar".
+        Anda bisa sesuaikan nilai ini (misalnya, `max-w-md`, `max-w-4xl`, dll.) 
+        untuk mendapatkan ukuran yang paling sesuai. Ini adalah lebar maksimum yang responsif.
+      - `px-4`: Memberi sedikit padding horizontal jika diperlukan.
+    */}
+    <img
+      className="w-full h-auto mx-auto" // `w-full` membuat gambar mengisi wrapper, `h-auto` menjaga aspek rasio, `mx-auto` memastikan terpusat jika ada sisa ruang.
+      src="https://raw.githubusercontent.com/DimasAswito/DimasAswito/output/snake.svg"
+      alt="Snake animation GitHub contributions"
+    />
+  </div>
+
+  <h5 className="text-sm text-gray-500 mt-6"> 
+    {/* mt-6 untuk jarak lebih dari gambar, text-center diwarisi dari div luar */}
+    <a
+      href={`https://github.com/${GITHUB_USERNAME}`} 
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:text-primary transition-colors duration-300"
+    >
+      Look my Github Profile
+    </a>
+  </h5>
+</div>
       </div>
     </section>
   );

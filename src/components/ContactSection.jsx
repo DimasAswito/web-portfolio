@@ -63,7 +63,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-medium mb-1">Phone</h4>
-                    <a href={`tel:${contact.phone}`} className="text-gray-300 hover:text-primary transition duration-300">{contact.phone}</a>
+                    <a href={`wa.me/${contact.phone}`} className="text-gray-300 hover:text-primary transition duration-300">{contact.phone}</a>
                   </div>
                 </div>
                 <div className="flex items-start">

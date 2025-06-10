@@ -4,6 +4,29 @@ import { supabase } from '../supabaseClient';
 export default function ProjectSection() {
   const [projects, setProjects] = useState([]);
 
+  const formatDisplayDate = (dateString) => {
+    if (!dateString || dateString === 'Present') {
+      return dateString;
+    }
+    
+    if (!/^\d{4}-\d{2}$/.test(dateString)) {
+      return dateString; 
+    }
+
+    try {
+      const [year, month] = dateString.split('-');
+      const date = new Date(year, month - 1);
+      
+      return date.toLocaleDateString('en-GB', {
+        month: 'short',
+        year: 'numeric',
+      });
+    } catch (e) {
+      console.error("Gagal memformat tanggal:", dateString, e);
+      return dateString;
+    }
+  };
+
   useEffect(() => {
     async function fetchProjects() {
       const { data, error } = await supabase
@@ -30,7 +53,7 @@ export default function ProjectSection() {
             <div key={index} className="bg-darker rounded-xl p-6 shadow-lg card-hover">
               <div className="mb-4">
                 <span className="text-xs bg-primary/20 text-primary px-2 py-1 rounded-full">
-                  {project.start_month} - {project.end_month}
+                    {formatDisplayDate(project.start_month)} - {formatDisplayDate(project.end_month)}
                 </span>
               </div>
               <h3 className="text-xl font-semibold mb-3 text-primary">

@@ -26,6 +26,7 @@ export default function EducationSection() {
       return dateString;
     }
   };
+  
   useEffect(() => {
     async function fetchEducations() {
       const { data, error } = await supabase.from('education').select('*').order('start_year', { ascending: false });

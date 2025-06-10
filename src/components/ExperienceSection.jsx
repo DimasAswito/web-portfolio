@@ -4,6 +4,29 @@ import { supabase } from '../supabaseClient';
 export default function ExperienceSection() {
   const [experiences, setExperiences] = useState([]);
 
+  const formatDisplayDate = (dateString) => {
+    if (!dateString || dateString === 'Present') {
+      return dateString;
+    }
+    
+    if (!/^\d{4}-\d{2}$/.test(dateString)) {
+      return dateString; 
+    }
+
+    try {
+      const [year, month] = dateString.split('-');
+      const date = new Date(year, month - 1);
+      
+      return date.toLocaleDateString('en-GB', {
+        month: 'short',
+        year: 'numeric',
+      });
+    } catch (e) {
+      console.error("Gagal memformat tanggal:", dateString, e);
+      return dateString;
+    }
+  };
+
   useEffect(() => {
     async function fetchExperiences() {
       const { data, error } = await supabase
@@ -33,7 +56,7 @@ export default function ExperienceSection() {
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="text-xl font-semibold text-primary">{exp.name}</h3>
                   <span className="text-sm bg-primary/20 text-primary px-3 py-1 rounded-full">
-                    {exp.start_month} - {exp.end_month}
+                    {formatDisplayDate(exp.start_month)} - {formatDisplayDate(exp.end_month)}
                   </span>
                 </div>
                 <p className="text-gray-300 mb-2">{exp.position}</p>

@@ -4,6 +4,28 @@ import { supabase } from '../supabaseClient';
 export default function EducationSection() {
   const [educations, setEducations] = useState([]);
 
+  const formatDisplayDate = (dateString) => {
+    if (!dateString || dateString === 'Present') {
+      return dateString;
+    }
+    
+    if (!/^\d{4}-\d{2}$/.test(dateString)) {
+      return dateString; 
+    }
+
+    try {
+      const [year, month] = dateString.split('-');
+      const date = new Date(year, month - 1);
+      
+      return date.toLocaleDateString('en-GB', {
+        month: 'short',
+        year: 'numeric',
+      });
+    } catch (e) {
+      console.error("Gagal memformat tanggal:", dateString, e);
+      return dateString;
+    }
+  };
   useEffect(() => {
     async function fetchEducations() {
       const { data, error } = await supabase.from('education').select('*').order('start_year', { ascending: false });
@@ -30,7 +52,7 @@ export default function EducationSection() {
                     {edu.education_name}
                   </h3>
                   <span className="text-sm bg-primary/20 text-primary px-3 py-1 rounded-full">
-                    {edu.start_year} - {edu.end_year}
+                    {formatDisplayDate(edu.start_year)} - {formatDisplayDate(edu.end_year)}
                   </span>
                 </div>
                 <p className="text-gray-300 mb-2">

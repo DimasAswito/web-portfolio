@@ -45,12 +45,12 @@ export default function ProjectSection() {
   }, []);
 
   return (
-    <section id="projects" className="py-20 bg-dark">
+    <section id="projects" className="py-20 overflow-hidden">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">My Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <div key={index} className="bg-darker rounded-xl p-6 shadow-lg card-hover">
+            <div key={index} className="bg-dark rounded-xl p-6 shadow-lg card-hover">
               <div className="mb-4">
                 <span className="text-xs bg-primary/20 text-primary px-2 py-1 rounded-full">
                     {formatDisplayDate(project.start_month)} - {formatDisplayDate(project.end_month)}

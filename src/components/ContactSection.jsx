@@ -81,7 +81,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-medium mb-1">LinkedIn</h4>
-                    <a href={contact.LinkedIn} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-primary transition duration-300">{contact.LinkedIn}</a>
+                    <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-primary transition duration-300">{contact.linkedin}</a>
                   </div>
                 </div>
               </div>

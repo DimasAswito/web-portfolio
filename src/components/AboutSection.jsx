@@ -1,20 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 
-const iconMap = {
-  linkedin: 'fab fa-linkedin',
-  email: 'fas fa-envelope',
-  phone: 'fas fa-phone',
-};
+// Hapus atau sesuaikan iconMap karena sudah tidak digunakan
+// const iconMap = { ... };
 
-  const GITHUB_USERNAME = 'DimasAswito';
+// GITHUB_USERNAME bisa dipindah ke dalam komponen jika Anda lebih suka
+const GITHUB_USERNAME = 'DimasAswito';
+
+// Data contoh untuk Tech Stack. Nantinya, Anda akan mengambil ini dari Supabase.
+// Pastikan URL logo valid. Anda bisa mencari logo di situs seperti devicon.dev
+const sampleTechStack = [
+  { name: 'HTML5', logo_url: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg' },
+  { name: 'CSS3', logo_url: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg' },
+  { name: 'JavaScript', logo_url: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg' },
+  { name: 'React', logo_url: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
+  { name: 'Node.js', logo_url: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg' },
+  { name: 'Tailwind CSS', logo_url: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
+  { name: 'Supabase', logo_url: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg' },
+  { name: 'Figma', logo_url: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg' },
+  { name: 'Kotlin', logo_url: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg' },
+  { name: 'Laravel', logo_url: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg' },
+];
+
 
 export default function AboutSection() {
   const [about, setAbout] = useState({
     description: [],
     tags: [],
-    skills: [],
-    social_media: [],
+    tech_stack: [], 
   });
 
   useEffect(() => {
@@ -24,110 +37,108 @@ export default function AboutSection() {
         setAbout({
           description: data.description || [],
           tags: data.tag || [],
-          skills: data.skill || [],
-          social_media: data.socialMedia || [],
+          // Nantinya, Anda akan mengambil data tech_stack seperti ini:
+          tech_stack: data.tech_stack || [],
+          
+          // Untuk sekarang, kita gunakan data contoh
+          // tech_stack: sampleTechStack,
         });
       } else {
         console.error('Failed to fetch about data:', error);
+        // Jika gagal fetch, tetap gunakan data contoh agar komponen tidak kosong
+        setAbout(prev => ({ ...prev, tech_stack: sampleTechStack }));
       }
     }
     fetchAbout();
   }, []);
 
+  // CSS untuk animasi marquee
+const marqueeStyles = `
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .scroller {
+      animation: scroll 15s linear infinite;
+    }
+  `;
+
+
   return (
-    <section id="about" className="py-20">
-      <div className="container mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">About Me</h2>
-        <div className="flex flex-col md:flex-row items-center">
-          <div className="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+    <>
+      {/* Sisipkan CSS animasi ke dalam dokumen */}
+      <style>{marqueeStyles}</style>
+
+      <section id="about" className="pt-20 overflow-hidden bg-dark"> {/* Tambahkan overflow-hidden */}
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">About Me</h2>
+          
+          {/* Layout Satu Kolom Terpusat untuk Deskripsi dan Tag */}
+          <div className="max-w-3xl mx-auto text-center mb-8">
             {about.description.map((para, index) => (
               <p key={index} className="text-lg mb-6 text-gray-300">
                 {para}
               </p>
             ))}
-            <div className="flex flex-wrap gap-4 mb-8">
+            <div className="flex flex-wrap gap-3 justify-center">
               {about.tags.map((tag, index) => (
-                <span key={index} className="px-4 py-2 bg-blue-900/30 text-primary rounded-full">
+                <span key={index} className="px-4 py-2 bg-blue-900/40 text-primary rounded-full text-sm">
                   {tag}
                 </span>
               ))}
             </div>
-            <div className="flex space-x-4">
-              {about.social_media.map((s, index) => (
-                <a
-                  key={index}
-                  href={s.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-2xl text-primary hover:text-blue-400 transition duration-300"
-                >
-                  <i className={iconMap[s.type] || 'fas fa-link'}></i>
-                </a>
-              ))}
+
+            <div className="flex flex-col items-center text-center">
+            <div className="w-full max-w-xl md:max-w-2xl lg:max-w-3xl px-4">
+              <img
+                className="w-full h-auto mx-auto"
+                src="https://raw.githubusercontent.com/DimasAswito/DimasAswito/output/snake.svg"
+                alt="Snake animation GitHub contributions"
+              />
             </div>
+            <h4 className="text-sm text-gray-500 mt-6"> 
+              <a
+                href={`https://github.com/${GITHUB_USERNAME}`} 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors duration-300"
+              >
+                Look my Github Profile
+              </a>
+            </h4>
           </div>
-          <div className="md:w-1/2">
-            <div className="bg-dark rounded-xl p-8 shadow-lg card-hover">
-              <h3 className="text-xl font-semibold mb-6 text-primary">My Skills</h3>
-              <div className="space-y-6">
-                {about.skills.map((skill, index) => (
-                  <div key={index}>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium">{skill.name}</span>
-                      <span className="text-primary">{skill.percentage}%</span>
-                    </div>
-                    <div className="skill-bar bg-gray-700 h-2 rounded-full">
-                      <div
-                        className="skill-progress bg-primary h-2 rounded-full"
-                        style={{ width: `${skill.percentage}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
+          </div>
+
+          
+{/* === BAGIAN TECH STACK (Loop Mulus & Tidak Berhenti Saat Hover) === */}
+<div className="w-full text-center mb-20">
+  <h5 className="md:text-2xl font-bold mb-7 gradient-text">My Tech Stack </h5>
+  
+  <div 
+    className="relative w-full" 
+    style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)'}}
+  >
+      <div className="flex min-w-full scroller">
+          {/* 1. Render item DUA KALI untuk loop yang mulus */}
+          {[...about.tech_stack, ...about.tech_stack].map((tech, index) => (
+              <div key={index} className="flex-shrink-0 w-40 flex flex-col items-center justify-center p-4">
+                  <img
+                      src={tech.logo_url}
+                      alt={tech.name}
+                      className="h-16 w-16 object-contain filter grayscale transition-all duration-300 hover:grayscale-0"
+                  />
+                  <p className="mt-2 text-sm text-gray-400">{tech.name}</p>
               </div>
-            </div>
-          </div>
-        </div>
-        <div className="mt-20 flex flex-col items-center text-center">
-  {/* Penjelasan:
-    - `flex flex-col items-center`: Membuat div ini menjadi flex container, 
-      menyusun anak-anaknya secara vertikal (flex-col), dan memusatkan mereka secara horizontal (items-center).
-    - `text-center`: Memusatkan teks di dalam elemen ini dan anak-anaknya (berguna untuk h3 dan h5).
-  */}
-  <h3 className="text-2xl md:text-3xl font-bold mb-8 gradient-text">
-    {/* text-center sudah ada di sini, jadi gradient-text akan terpusat */}
-    My GitHub Contributions
-  </h3>
-
-  {/* Wrapper untuk mengontrol ukuran dan pemusatan gambar */}
-  <div className="w-full max-w-xl md:max-w-2xl lg:max-w-3xl px-4">
-    {/* Penjelasan Wrapper Gambar:
-      - `w-full`: Mengambil lebar penuh dari kontainer induknya (yang dibatasi oleh layout halaman Anda).
-      - `max-w-xl md:max-w-2xl lg:max-w-3xl`: Ini yang akan membuat gambar Anda "lebih besar".
-        Anda bisa sesuaikan nilai ini (misalnya, `max-w-md`, `max-w-4xl`, dll.) 
-        untuk mendapatkan ukuran yang paling sesuai. Ini adalah lebar maksimum yang responsif.
-      - `px-4`: Memberi sedikit padding horizontal jika diperlukan.
-    */}
-    <img
-      className="w-full h-auto mx-auto" // `w-full` membuat gambar mengisi wrapper, `h-auto` menjaga aspek rasio, `mx-auto` memastikan terpusat jika ada sisa ruang.
-      src="https://raw.githubusercontent.com/DimasAswito/DimasAswito/output/snake.svg"
-      alt="Snake animation GitHub contributions"
-    />
-  </div>
-
-  <h5 className="text-sm text-gray-500 mt-6"> 
-    {/* mt-6 untuk jarak lebih dari gambar, text-center diwarisi dari div luar */}
-    <a
-      href={`https://github.com/${GITHUB_USERNAME}`} 
-      target="_blank"
-      rel="noopener noreferrer"
-      className="hover:text-primary transition-colors duration-300"
-    >
-      Look my Github Profile
-    </a>
-  </h5>
-</div>
+          ))}
       </div>
-    </section>
+  </div>
+</div>
+{/* === AKHIR BAGIAN TECH STACK === */}
+
+          {/* Bagian Kontribusi GitHub (tetap sama) */}
+          
+        </div>
+      </section>
+    </>
   );
 }

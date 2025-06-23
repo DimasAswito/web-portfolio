@@ -1,15 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../supabaseClient'; 
-import { FaLinkedin, FaEnvelope, FaPhone, FaGithub, FaTwitter, FaInstagram, FaPlus, FaTrash } from 'react-icons/fa';
+import { FaPlus, FaTrash, FaSave, FaSync } from 'react-icons/fa';
 
 const socialIconMapping = {
-  linkedin: <FaLinkedin className="mr-2 text-blue-500" />,
-  'fa-envelope': <FaEnvelope className="mr-2 text-gray-500" />, 
-  email: <FaEnvelope className="mr-2 text-gray-500" />, 
-  phone: <FaPhone className="mr-2 text-green-500" />,
-  github: <FaGithub className="mr-2 text-gray-700" />,
-  twitter: <FaTwitter className="mr-2 text-sky-500" />,
-  instagram: <FaInstagram className="mr-2 text-pink-500" />,
   default: <FaPlus className="mr-2 text-gray-400" /> 
 };
 
@@ -18,8 +11,7 @@ const AboutAdmin = () => {
     id: null,
     description: [],
     tag: [],
-    skill: [],
-    socialMedia: [],
+    tech_stack: [],
   });
   const [initialData, setInitialData] = useState(null);
 
@@ -46,8 +38,7 @@ const AboutAdmin = () => {
           id: data.id,
           description: data.description || [],
           tag: data.tag || [],
-          skill: data.skill || [],
-          socialMedia: data.socialMedia || [],
+          tech_stack: (Array.isArray(data.tech_stack) ? data.tech_stack : []).map(tech => ({ name: tech.name || '', logo_url: tech.logo_url || '' })),
         };
         setAboutData(fetched);
         setInitialData(JSON.parse(JSON.stringify(fetched))); 
@@ -56,8 +47,7 @@ const AboutAdmin = () => {
           id: null, 
           description: [],
           tag: [],
-          skill: [],
-          socialMedia: [],
+          tech_stack: []
         }
         setAboutData(emptyData);
         setInitialData(JSON.parse(JSON.stringify(emptyData)));
@@ -102,27 +92,34 @@ const AboutAdmin = () => {
     setAboutData(prev => ({ ...prev, tag: prev.tag.filter(tag => tag !== tagToRemove) }));
   };
 
-  const handleskillChange = (index, field, value) => {
-    const updatedskill = [...aboutData.skill];
-    updatedskill[index] = { ...updatedskill[index], [field]: field === 'percentage' ? parseInt(value, 10) || 0 : value };
-    setAboutData(prev => ({ ...prev, skill: updatedskill }));
+  // --- HANDLER UNTUK TECH STACK (BAGIAN BARU) ---
+  const generateDeviconUrl = (name) => {
+    if (!name) return '';
+    const formattedName = name.toLowerCase()
+                              .replace(/\s/g, '') // Hapus spasi (e.g., "Node.js" -> "nodejs")
+                              .replace(/\./g, ''); // Hapus titik
+    return `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${formattedName}/${formattedName}-original.svg`;
   };
 
-  const handleAddskill = () => {
-    if (aboutData.skill.length < 5) {
-      setAboutData(prev => ({ ...prev, skill: [...prev.skill, { name: '', percentage: 0 }] }));
+  const handleTechStackChange = (index, field, value) => {
+    const updatedTechStack = [...aboutData.tech_stack];
+    updatedTechStack[index] = { ...updatedTechStack[index], [field]: value };
+
+    // Jika field 'name' yang berubah, coba generate ulang URL logo secara otomatis
+    if (field === 'name') {
+      updatedTechStack[index].logo_url = generateDeviconUrl(value);
     }
+
+    setAboutData(prev => ({ ...prev, tech_stack: updatedTechStack }));
   };
 
-  const handleRemoveskill = (index) => {
-    const updatedskill = aboutData.skill.filter((_, i) => i !== index);
-    setAboutData(prev => ({ ...prev, skill: updatedskill }));
+  const handleAddTechStack = () => {
+    setAboutData(prev => ({ ...prev, tech_stack: [...prev.tech_stack, { name: '', logo_url: '' }] }));
   };
 
-  const handleSocialMediaChange = (index, value) => {
-    const updatedSocialMedia = [...aboutData.socialMedia];
-    updatedSocialMedia[index] = { ...updatedSocialMedia[index], url: value };
-    setAboutData(prev => ({ ...prev, socialMedia: updatedSocialMedia }));
+  const handleRemoveTechStack = (index) => {
+    const updatedTechStack = aboutData.tech_stack.filter((_, i) => i !== index);
+    setAboutData(prev => ({ ...prev, tech_stack: updatedTechStack }));
   };
 
   // Simpan Perubahan
@@ -142,11 +139,11 @@ const AboutAdmin = () => {
     try {
       const { error: saveError } = await supabase
         .from('about')
-        .upsert(dataToSave, { onConflict: 'id' }); 
-      if (saveError) throw saveError;
+        .upsert({ ...dataToSave, tech_stack: aboutData.tech_stack }, { onConflict: 'id' });
 
+      if (saveError) throw saveError;
       setSuccessMessage('Data berhasil disimpan!');
-      setInitialData(JSON.parse(JSON.stringify(aboutData))); 
+      setInitialData(JSON.parse(JSON.stringify(aboutData)));
       setTimeout(() => setSuccessMessage(''), 3000);
     } catch (err) {
       console.error("Error saving about data:", err);
@@ -214,43 +211,56 @@ const AboutAdmin = () => {
           </div>
         </div>
 
-        {/* skill Section */}
+{/* === BAGIAN TECH STACK (PENGGANTI SKILL) === */}
         <div className="mb-8 p-6 bg-slate-800 rounded-lg shadow-md">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-indigo-300">Skill (Maks. 5)</h2>
-            {aboutData.skill.length < 5 && (
-              <button
-                onClick={handleAddskill}
-                className="flex items-center p-2 bg-green-600 hover:bg-green-500 text-white rounded-md text-sm transition-colors"
-              >
-                <FaPlus className="mr-1" /> Tambah skill
-              </button>
-            )}
+            <h2 className="text-xl font-semibold text-indigo-300">Tech Stack</h2>
+            <button
+              onClick={handleAddTechStack}
+              className="flex items-center p-2 bg-green-600 hover:bg-green-500 text-white rounded-md text-sm transition-colors"
+            >
+              <FaPlus className="mr-1" /> Tambah Teknologi
+            </button>
           </div>
+          <p className="text-xs text-slate-400 mb-4">
+            Ketik nama teknologi (e.g., 'react', 'nodejs', 'tailwind css'), URL logo akan terisi otomatis. Jika gambar tidak muncul atau salah, Anda bisa mengubah URL logo secara manual.
+          </p>
           <div className="space-y-4">
-            {aboutData.skill.map((skill, index) => (
-              <div key={index} className="grid grid-cols-1 md:grid-cols-[2fr_1fr_auto] gap-3 items-center p-3 bg-slate-700/50 rounded-md">
+            {aboutData.tech_stack.map((tech, index) => (
+              <div key={index} className="grid grid-cols-1 md:grid-cols-[1fr_2fr_auto] gap-3 items-center p-3 bg-slate-700/50 rounded-md">
+                
+                {/* Input Nama Teknologi */}
                 <input
                   type="text"
                   className="w-full p-2 bg-slate-700 border border-slate-600 rounded-md focus:ring-1 focus:ring-indigo-500 outline-none"
-                  placeholder="Nama skill (e.g., React)"
-                  value={skill.name}
-                  onChange={(e) => handleskillChange(index, 'name', e.target.value)}
+                  placeholder="Nama Teknologi"
+                  value={tech.name}
+                  onChange={(e) => handleTechStackChange(index, 'name', e.target.value)}
                 />
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  className="w-full p-2 bg-slate-700 border border-slate-600 rounded-md focus:ring-1 focus:ring-indigo-500 outline-none appearance-none"
-                  placeholder="Persentase (0-100)"
-                  value={skill.percentage}
-                  onChange={(e) => handleskillChange(index, 'percentage', e.target.value)}
-                  style={{ MozAppearance: 'textfield' }} /* Firefox */
-                />
+
+                {/* Input URL Logo (Bisa diedit manual) */}
+                <div className="flex items-center gap-2">
+                    <input
+                        type="url"
+                        className="w-full p-2 bg-slate-700 border border-slate-600 rounded-md focus:ring-1 focus:ring-indigo-500 outline-none"
+                        placeholder="URL Logo"
+                        value={tech.logo_url}
+                        onChange={(e) => handleTechStackChange(index, 'logo_url', e.target.value)}
+                    />
+                    {/* Tombol untuk refresh/regenerate URL berdasarkan nama */}
+                    <button type="button" onClick={() => handleTechStackChange(index, 'logo_url', generateDeviconUrl(tech.name))} className="p-2 text-slate-300 hover:text-white" title="Generate ulang URL dari nama">
+                        <FaSync />
+                    </button>
+                    {tech.logo_url && (
+                        <img src={tech.logo_url} alt={tech.name} className="h-8 w-8 object-contain bg-white/10 rounded p-1" onError={(e) => { e.target.style.display = 'none'; }} onLoad={(e) => { e.target.style.display = 'block'; }} />
+                    )}
+                </div>
+
+                {/* Tombol Hapus */}
                 <button
-                  onClick={() => handleRemoveskill(index)}
+                  onClick={() => handleRemoveTechStack(index)}
                   className="p-2 bg-red-600 hover:bg-red-500 text-white rounded-md flex justify-center items-center transition-colors"
-                  aria-label={`Hapus skill ${skill.name}`}
+                  aria-label={`Hapus ${tech.name}`}
                 >
                   <FaTrash />
                 </button>
@@ -258,28 +268,7 @@ const AboutAdmin = () => {
             ))}
           </div>
         </div>
-
-        {/* Social Media Section */}
-        <div className="mb-8 p-6 bg-slate-800 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-4 text-indigo-300">Media Sosial</h2>
-          <div className="space-y-4">
-            {aboutData.socialMedia.map((social, index) => (
-              <div key={index} className="flex items-center gap-3 p-3 bg-slate-700/50 rounded-md">
-                <span className="flex items-center text-xl w-10 h-10 justify-center">
-                  {socialIconMapping[social.type.toLowerCase()] || socialIconMapping.default}
-                </span>
-                <span className="text-sm text-slate-400 capitalize w-24 hidden md:inline">{social.type.replace('fa-','')}</span>
-                <input
-                  type="url"
-                  className="flex-grow p-2 bg-slate-700 border border-slate-600 rounded-md focus:ring-1 focus:ring-indigo-500 outline-none"
-                  placeholder="URL Media Sosial"
-                  value={social.url}
-                  onChange={(e) => handleSocialMediaChange(index, e.target.value)}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* === AKHIR BAGIAN TECH STACK === */}
 
         {/* Save Button */}
         <div className="mt-10 text-right">

@@ -12,6 +12,7 @@ import AboutSection from './components/AboutSection';
 import EducationSection from './components/EducationSection';
 import ExperienceSection from './components/ExperienceSection';
 import ProjectsSection from './components/ProjectsSection';
+import CertificateSection from './components/CertificateSection';
 import ContactSection from './components/ContactSection';
 
 // Komponen admin
@@ -38,6 +39,7 @@ function App() {
             <EducationSection />
             <ExperienceSection />
             <ProjectsSection />
+            <CertificateSection />
             <ContactSection />
           </PublicLayout>
         } />

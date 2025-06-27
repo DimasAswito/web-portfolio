@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
-import { FaCalendarAlt, FaExternalLinkAlt, FaCertificate, FaImage, FaFilePdf } from 'react-icons/fa'; // Pastikan FaCertificate diimpor
+import { FaCalendarAlt, FaExternalLinkAlt, FaImage, FaFilePdf } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
@@ -49,6 +50,7 @@ const CertificateDisplay = ({ imageUrl, altText }) => {
 };
 
 export default function CertificateSection() {
+  const { t } = useTranslation();
   const [certificates, setCertificates] = useState([]);
   const [loading, setLoading] = useState(true);
   // 1. State untuk melacak jumlah sertifikat yang ditampilkan
@@ -90,7 +92,7 @@ export default function CertificateSection() {
   return (
     <section id="certificates" className="py-20 bg-dark">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">Certificates & Achievements</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('certificates.title')}</h2>
         
         {loading ? (
           <p className="text-center text-gray-400">Loading certificates...</p>
@@ -119,7 +121,7 @@ export default function CertificateSection() {
                     </h3>
                     <div className="flex items-center text-sm text-gray-400 mb-6">
                       <FaCalendarAlt className="mr-2" />
-                      <span>Diperoleh pada {formatDisplayDate(cert.get_month)}</span>
+                      <span>{t('certificates.obtainedOn')} {formatDisplayDate(cert.get_month)}</span>
                     </div>
                     {cert.link && (
                       <a
@@ -128,7 +130,7 @@ export default function CertificateSection() {
                         rel="noopener noreferrer"
                         className="mt-auto inline-block text-center w-full px-4 py-2 bg-primary/20 text-primary rounded-lg font-semibold hover:bg-primary hover:text-dark transition-colors duration-300"
                       >
-                        Lihat Kredensial <FaExternalLinkAlt className="inline ml-2" />
+                        {t('certificates.viewCredential')} <FaExternalLinkAlt className="inline ml-2" />
                       </a>
                     )}
                   </div>
@@ -143,7 +145,7 @@ export default function CertificateSection() {
                   onClick={handleLoadMore}
                   className="px-8 py-3 bg-primary/20 text-primary font-semibold rounded-lg hover:bg-primary hover:text-dark transition-colors duration-300"
                 >
-                  Look other certificates
+                  {t('certificates.loadMore')}
                 </button>
               </div>
             )}

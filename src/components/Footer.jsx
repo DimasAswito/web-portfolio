@@ -1,8 +1,15 @@
 import React from 'react';
-import { FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { FaHeart, FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa'; // FaHeart ditambahkan
 import { Link as ScrollLink } from 'react-scroll';
 
+// 1. Impor hook useTranslation
+import { useTranslation } from 'react-i18next';
+
 export default function Footer() {
+  // 2. Panggil hook untuk mendapatkan fungsi 't'
+  const { t } = useTranslation();
+
+  // Array ini berisi kunci untuk navigasi
   const links = ['home', 'about', 'education', 'experience', 'projects', 'contact'];
 
   return (
@@ -14,16 +21,17 @@ export default function Footer() {
               DA.
             </ScrollLink>
           </div>
-          <div className="flex space-x-6 mb-4 md:mb-0">
+          <div className="flex flex-wrap justify-center space-x-6 mb-4 md:mb-0">
             {links.map(link => (
               <ScrollLink
                 key={link}
                 to={link}
                 smooth={true}
                 duration={500}
-                className="text-gray-400 hover:text-primary transition duration-300 cursor-pointer"
+                className="text-gray-400 hover:text-primary transition duration-300 cursor-pointer capitalize"
               >
-                {link.charAt(0).toUpperCase() + link.slice(1)}
+                {/* 3. Gunakan t() untuk menerjemahkan label dari kunci di array */}
+                {t(`navbar.${link}`)}
               </ScrollLink>
             ))}
           </div>
@@ -39,8 +47,9 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500">
-          <p>&copy; 2024 Dimas Aswito. All rights reserved.</p>
+        <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+          {/* 4. Ganti teks hak cipta */}
+          <p>&copy; {new Date().getFullYear()} Dimas Aswito. {t('footer.rights')}</p>
         </div>
       </div>
     </footer>

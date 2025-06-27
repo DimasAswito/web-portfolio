@@ -1,0 +1,64 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "education": "Education",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact",
+    "toggle_theme": "Toggle theme",
+    "toggle_language": "Toggle language",
+    "mode": "Mode",
+    "language": "Language"
+  },
+  "home": {
+    "greeting": "Hi, I'm",
+    "contact_me": "Contact Me",
+    "view_projects": "View Projects",
+    "download_cv": "Download CV"
+  },
+  "about": {
+    "title": "About Me",
+    "techStackTitle": "My Tech Stack",
+    "githubTitle": "My GitHub Contributions",
+    "githubLink": "Look my Github Profile"
+  },
+  "education": {
+    "title": "Education",
+    "major": "Major"
+  },
+  "experience": {
+    "title": "Experience"
+  },
+  "projects": {
+    "title": "My Projects",
+    "": "View Project"
+  },
+  "certificates": {
+    "title": "Certificates & Achievements",
+    "obtainedOn": "Obtained on",
+    "viewCredential": "View Credential",
+    "loadMore": "Look other certificates"
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "info_title": "Contact Information",
+    "follow_title": "Follow Me",
+    "email_label": "Email",
+    "phone_label": "Phone",
+    "location_label": "Location",
+    "linkedin_label": "LinkedIn",
+    "loading": "Loading contact information..."
+  },
+  "qna": {
+    "title": "Send Me a Message",
+    "subtitle": "Let's connect! Send me a message, and I'll get back to you as soon as possible.",
+    "name_placeholder": "Your Name",
+    "email_placeholder": "Your Email",
+    "message_placeholder": "Your Message",
+    "send_button": "Send Message"
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  }
+}

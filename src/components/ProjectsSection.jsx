@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
+import { useTranslation } from 'react-i18next';
 
 export default function ProjectSection() {
+  const { t } = useTranslation();
   const [projects, setProjects] = useState([]);
 
   const formatDisplayDate = (dateString) => {
@@ -47,7 +49,7 @@ export default function ProjectSection() {
   return (
     <section id="projects" className="py-20 overflow-hidden">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">My Projects</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('projects.title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <div key={index} className="bg-dark rounded-xl p-6 shadow-lg card-hover">
@@ -68,7 +70,7 @@ export default function ProjectSection() {
                 ))}
               </div>
               <a href="https://github.com/ryvdyzrdffvjqfvkxdou" className="text-primary hover:text-blue-400 flex items-center">
-                <span>View Details</span>
+                <span>{t('projects.link')}</span>
                 <i className="fas fa-arrow-right ml-2"></i>
               </a>
             </div>

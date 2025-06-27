@@ -1,0 +1,64 @@
+{
+  "navbar": {
+    "home": "Beranda",
+    "about": "Tentang",
+    "education": "Pendidikan",
+    "experience": "Pengalaman",
+    "projects": "Proyek",
+    "contact": "Kontak",
+    "toggle_theme": "Ubah tema",
+    "toggle_language": "Ubah bahasa",
+    "mode": "Mode",
+    "language": "Bahasa"
+  },
+  "home": {
+    "greeting": "Hai, saya",
+    "contact_me": "Hubungi Saya",
+    "view_projects": "Lihat Proyek",
+    "download_cv": "Unduh CV"
+  },
+  "about": {
+    "title": "Tentang Saya",
+    "techStackTitle": "Teknologi yang Saya Gunakan",
+    "githubTitle": "Kontribusi GitHub Saya",
+    "githubLink": "Lihat Profil Github Saya"
+  },
+  "education": {
+    "title": "Pendidikan",
+    "major": "Jurusan"
+  },
+  "experience": {
+    "title": "Pengalaman"
+  },
+  "projects": {
+    "title": "Proyek Saya",
+    "link": "Lihat Proyek"
+  },
+  "certificates": {
+    "title": "Sertifikat & Pencapaian",
+    "obtainedOn": "Diperoleh pada",
+    "viewCredential": "Lihat Kredensial",
+    "loadMore": "Lihat sertifikat lainnya"
+  },
+  "contact": {
+    "title": "Hubungi Saya",
+    "info_title": "Informasi Kontak",
+    "follow_title": "Ikuti Saya",
+    "email_label": "Email",
+    "phone_label": "Telepon",
+    "location_label": "Lokasi",
+    "linkedin_label": "LinkedIn",
+    "loading": "Memuat informasi kontak..."
+  },
+  "qna": {
+    "title": "Kirim Saya Pesan",
+    "subtitle": "Mari terhubung! Kirimkan saya pesan, dan saya akan segera membalasnya.",
+    "name_placeholder": "Nama Anda",
+    "email_placeholder": "Email Anda",
+    "message_placeholder": "Pesan Anda",
+    "send_button": "Kirim Pesan"
+  },
+  "footer": {
+    "rights": "Hak cipta dilindungi."
+  }
+}

@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import { supabase } from '../supabaseClient';
 
+// 1. Impor hook useTranslation
+import { useTranslation } from 'react-i18next';
+
 export default function HeroSection() {
+  // 2. Panggil hook untuk mendapatkan fungsi 't'
+  const { t } = useTranslation();
+
   const [heroData, setHeroData] = useState({
     name: '',
     tagline: '',
@@ -30,8 +36,9 @@ export default function HeroSection() {
       <div className="container mx-auto px-6 py-16 md:py-24">
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-12 md:mb-0">
+            {/* 3. Ganti teks statis dengan fungsi t() */}
             <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              Hi, I'm <span className="gradient-text">{heroData.name}</span>
+              {t('home.greeting')} <span className="gradient-text">{heroData.name}</span>
             </h1>
             <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-primary">
               {heroData.tagline}
@@ -46,7 +53,7 @@ export default function HeroSection() {
                 duration={500}
                 className="cursor-pointer px-6 py-3 bg-primary text-dark font-medium rounded-lg hover:bg-blue-400 transition duration-300"
               >
-                Contact Me
+                {t('home.contact_me')}
               </ScrollLink>
               <ScrollLink
                 to="projects"
@@ -54,7 +61,7 @@ export default function HeroSection() {
                 duration={500}
                 className="cursor-pointer px-6 py-3 border border-primary text-primary font-medium rounded-lg hover:bg-blue-900/30 transition duration-300"
               >
-                View Projects
+                {t('home.view_projects')}
               </ScrollLink>
             </div>
           </div>

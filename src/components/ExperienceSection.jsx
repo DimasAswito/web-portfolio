@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
+import { useTranslation } from 'react-i18next';
 
 export default function ExperienceSection() {
+  const { t } = useTranslation();
   const [experiences, setExperiences] = useState([]);
 
   const formatDisplayDate = (dateString) => {
@@ -47,7 +49,7 @@ export default function ExperienceSection() {
   return (
     <section id="experience" className="py-20 bg-dark">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">Work Experience</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('experience.title')}</h2>
         <div className="max-w-4xl mx-auto">
           {experiences.map((exp, index) => (
             <div key={index} className="relative pl-8 mb-12 timeline-item">

@@ -74,16 +74,21 @@ export default function ProjectSection() {
                 ))}
               </div>
               
-              <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
+              <div 
+                className={`mt-auto pt-4 border-t border-gray-200 dark:border-gray-800 flex items-center 
+                            ${project.github && project.detail_link ? 'justify-between' : 'justify-center'}`}
+              >
+                {/* Tombol GitHub (tidak berubah) */}
                 {project.github && (
-                   <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-slate-500 dark:text-gray-400 hover:text-primary transition duration-300" title="Lihat di GitHub">
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-slate-500 dark:text-gray-400 hover:text-primary transition duration-300" title="Lihat di GitHub">
                     <FaGithub className="text-2xl" />
                   </a>
                 )}
                 
+                {/* Tombol Detail Proyek (tidak berubah) */}
                 {project.detail_link && (
-                   <a href={project.detail_link} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-sky-700 dark:hover:text-sky-400 flex items-center font-semibold text-sm">
-                    <span>{t('projects.view_project')}</span>
+                    <a href={project.detail_link} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-sky-700 dark:hover:text-sky-400 flex items-center font-semibold text-sm">
+                    <span>{t('projects.link')}</span>
                     <FaExternalLinkAlt className="ml-2" />
                   </a>
                 )}

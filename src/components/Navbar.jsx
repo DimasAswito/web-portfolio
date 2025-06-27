@@ -79,8 +79,6 @@ export default function Navbar() {
                     smooth={true}
                     duration={500}
                     spy={true}
-                    // --- PERUBAHAN DI SINI ---
-                    // Kembalikan kelas .nav-link dan .active-nav dari CSS
                     className="nav-link cursor-pointer"
                     activeClass="active-nav"
                   >
@@ -90,7 +88,6 @@ export default function Navbar() {
               </div>
 
               <div className="flex items-center space-x-4 ml-8">
-                {/* ... Tombol tema dan bahasa tidak berubah ... */}
                 <button
                   onClick={toggleTheme}
                   className="text-blue-900 dark:text-primary dark:hover:text-blue-400 hover:text-blue-600 transition-colors duration-300 w-8 h-8 flex items-center justify-center"
@@ -130,14 +127,42 @@ export default function Navbar() {
                   duration={500}
                   spy={true}
                   onClick={() => setMenuOpen(false)}
-                  // --- PERUBAHAN DI SINI (MOBILE) ---
                   className="nav-link cursor-pointer text-center py-2"
                   activeClass="active-nav"
                 >
                   {link.label}
                 </ScrollLink>
               ))}
-              {/* ... Kontrol mobile ... */}
+
+              <div className="border-t border-gray-200 dark:border-gray-700 mt-4 pt-4">
+                <div className="flex justify-center items-center space-x-6">
+                  <button
+                    onClick={toggleTheme}
+                    className="text-blue-900 dark:text-primary hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 flex items-center gap-2"
+                    aria-label="Toggle theme"
+                  >
+                    {theme === 'dark' ? (
+                      <FaSun key="sun-mobile" className="text-xl icon-transition-enter text-yellow-400" />
+                    ) : (
+                      <FaMoon key="moon-mobile" className="text-xl icon-transition-enter text-blue-900" />
+                    )}
+                    <span className="text-slate-700 dark:text-gray-300 text-sm">{t('navbar.mode')}</span>
+                  </button>
+
+                  <button
+                      onClick={toggleLanguage}
+                      className="hover:opacity-80 transition-opacity duration-300 flex items-center gap-2"
+                      aria-label="Toggle language"
+                  >
+                      {i18n.language.startsWith('id') ? (
+                        <UkFlagIcon key="uk-flag-mobile" className="w-8 h-6 rounded icon-transition-enter" />
+                      ) : (
+                        <IndonesiaFlagIcon key="id-flag-mobile" className="w-8 h-6 rounded icon-transition-enter" />
+                      )}
+                      <span className="text-slate-700 dark:text-gray-300 text-sm">{t('navbar.language')}</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}

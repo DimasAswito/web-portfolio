@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
-import { supabase } from '../supabaseClient'; // Pastikan path ini benar
-import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes, FaTag, FaLink, FaGithub } from 'react-icons/fa';
+import { supabase } from '../supabaseClient'; 
+import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes, FaLink, FaGithub } from 'react-icons/fa';
 
 // Helper function untuk format tanggal (tetap sama)
 const formatDateToNamaBulanTahun = (dateStringYyyyMm) => {

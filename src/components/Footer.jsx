@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaLinkedin, FaEnvelope, FaPhone, FaHeart } from 'react-icons/fa'; 
+import { FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa'; 
 import { Link as ScrollLink } from 'react-scroll';
 import { useTranslation } from 'react-i18next';
 

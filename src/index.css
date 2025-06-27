@@ -7,11 +7,19 @@ code {
 }
 
 body {
-        font-family: 'Inter', sans-serif;
-        background-color: #020617;
-        color: #f8fafc;
-        scroll-behavior: smooth;
-    }
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+
+/* #particle-background {
+  display: none;
+}
+
+html.dark #particle-background {
+  display: block;
+} */
     
     .gradient-text {
         background: linear-gradient(90deg, #0ea5e9, #3b82f6, #6366f1);

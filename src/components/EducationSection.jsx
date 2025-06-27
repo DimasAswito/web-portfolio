@@ -33,7 +33,7 @@ export default function EducationSection() {
   }, []);
 
   return (
-    <section id="education" className="py-20 overflow-hidden bg-white dark:bg-dark">
+    <section id="education" className="min-h-screen flex items-center pt-20">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('education.title')}</h2>
         <div className="max-w-3xl mx-auto">

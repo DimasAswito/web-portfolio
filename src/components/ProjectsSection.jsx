@@ -49,7 +49,7 @@ export default function ProjectSection() {
   }, []);
 
   return (
-    <section id="projects" className="py-20 overflow-hidden bg-white dark:bg-dark">
+    <section id="projects" className="min-h-screen flex items-center">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('projects.title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

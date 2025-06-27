@@ -44,7 +44,7 @@ export default function ContactSection() {
   };
 
  return (
-    <section id="contact" className="py-20 bg-white dark:bg-dark">
+    <section id="contact" className="min-h-screen flex items-center pt-20">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('contact.title')}</h2>
         <div className="flex flex-col md:flex-row gap-y-12 md:gap-y-0">

@@ -47,7 +47,7 @@ const CertificateFormFields = memo(({
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6"> {/* Gap y ditambah */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
         <div className="md:col-span-2">
           <label htmlFor={isEditMode ? "edit_cert_name" : "cert_name"} className="block mb-1 text-sm font-medium text-slate-300">Nama Sertifikat</label>
           <input
@@ -81,6 +81,7 @@ const CertificateFormFields = memo(({
                     onClick={onAddTag}
                     className="p-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-r-md transition-colors h-[46px] disabled:bg-slate-500 disabled:cursor-not-allowed"
                     aria-label="Tambah Tag"
+                    // eslint-disable-next-line no-mixed-operators
                     disabled={Array.isArray(data.tag) && data.tag.length >= 3 || !currentTagValue.trim()}
                 >
                     <FaPlus size={20}/>

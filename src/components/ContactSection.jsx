@@ -43,72 +43,64 @@ export default function ContactSection() {
     }
   };
 
-  return (
-    <section id="contact" className="py-20">
+ return (
+    <section id="contact" className="py-20 bg-white dark:bg-dark">
       <div className="container mx-auto px-6">
-        {/* 1. Ganti teks judul utama */}
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('contact.title')}</h2>
-        <div className="flex flex-col md:flex-row">
-          {/* SISI KIRI - INFORMASI KONTAK */}
-          <div className="md:w-1/2 mb-8 md:mb-0 md:pr-8">
-            {/* 2. Ganti teks sub-judul */}
+        <div className="flex flex-col md:flex-row gap-y-12 md:gap-y-0">
+          
+          <div className="md:w-1/2 md:pr-12">
             <h3 className="text-2xl font-semibold mb-6 text-primary">{t('contact.info_title')}</h3>
             {contact ? (
               <div className="space-y-6">
                 <div className="flex items-start">
-                  <div className="bg-primary/20 p-3 rounded-full mr-4">
+                  <div className="bg-primary/10 dark:bg-primary/20 p-3 rounded-full mr-4">
                     <i className="fas fa-envelope text-primary text-xl"></i>
                   </div>
                   <div>
-                    {/* Ganti label */}
-                    <h4 className="font-medium mb-1">{t('contact.email_label')}</h4>
-                    <a href={`mailto:${contact.email}`} className="text-gray-300 hover:text-primary transition duration-300">{contact.email}</a>
+                    <h4 className="font-medium mb-1 text-slate-800 dark:text-white">{t('contact.email_label')}</h4>
+                    <a href={`mailto:${contact.email}`} className="text-slate-600 dark:text-gray-300 hover:text-primary transition duration-300">{contact.email}</a>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <div className="bg-primary/20 p-3 rounded-full mr-4">
+                  <div className="bg-primary/10 dark:bg-primary/20 p-3 rounded-full mr-4">
                     <i className="fas fa-phone text-primary text-xl"></i>
                   </div>
                   <div>
-                    {/* Ganti label */}
-                    <h4 className="font-medium mb-1">{t('contact.phone_label')}</h4>
-                    <a href={`https://wa.me/${contact.phone}`} className="text-gray-300 hover:text-primary transition duration-300">{contact.phone}</a>
+                    <h4 className="font-medium mb-1 text-slate-800 dark:text-white">{t('contact.phone_label')}</h4>
+                    <a href={`https://wa.me/${contact.phone}`} className="text-slate-600 dark:text-gray-300 hover:text-primary transition duration-300">{contact.phone}</a>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <div className="bg-primary/20 p-3 rounded-full mr-4">
+                  <div className="bg-primary/10 dark:bg-primary/20 p-3 rounded-full mr-4">
                     <i className="fas fa-map-marker-alt text-primary text-xl"></i>
                   </div>
                   <div>
-                    {/* Ganti label */}
-                    <h4 className="font-medium mb-1">{t('contact.location_label')}</h4>
-                    <p className="text-gray-300">{contact.location}</p>
+                    <h4 className="font-medium mb-1 text-slate-800 dark:text-white">{t('contact.location_label')}</h4>
+                    <p className="text-slate-600 dark:text-gray-300">{contact.location}</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <div className="bg-primary/20 p-3 rounded-full mr-4">
+                  <div className="bg-primary/10 dark:bg-primary/20 p-3 rounded-full mr-4">
                     <i className="fab fa-linkedin text-primary text-xl"></i>
                   </div>
                   <div>
-                    {/* Ganti label */}
-                    <h4 className="font-medium mb-1">{t('contact.linkedin_label')}</h4>
-                    <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-primary transition duration-300 break-all">{contact.linkedin}</a>
+                    <h4 className="font-medium mb-1 text-slate-800 dark:text-white">{t('contact.linkedin_label')}</h4>
+                    <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" className="text-slate-600 dark:text-gray-300 hover:text-primary transition duration-300 break-all">{contact.linkedin}</a>
                   </div>
                 </div>
               </div>
             ) : (
-              // Ganti teks loading
-              <p className="text-gray-300">{t('contact.loading')}</p>
+              <p className="text-slate-600 dark:text-gray-300">{t('contact.loading')}</p>
             )}
             {contact && (
               <div className="mt-12">
-                {/* 3. Ganti teks sub-judul "Follow Me" */}
                 <h3 className="text-2xl font-semibold mb-6 text-primary">{t('contact.follow_title')}</h3>
                 <div className="flex space-x-6">
-                  {contact.github && (<a href={contact.github} className="text-3xl text-primary hover:text-blue-400 transition duration-300"><i className="fab fa-github"></i></a>)}
-                  {contact.instagram && (<a href={contact.instagram} className="text-3xl text-primary hover:text-blue-400 transition duration-300"><i className="fab fa-instagram"></i></a>)}
-                  {contact.facebook && (<a href={contact.facebook} className="text-3xl text-primary hover:text-blue-400 transition duration-300"><i className="fab fa-facebook"></i></a>)}
-                  {contact.linktree && (<a href={contact.linktree} className="text-3xl text-primary hover:text-blue-400 transition duration-300"><i className="fas fa-link"></i></a>)}
+                  {contact.github && (<a href={contact.github} className="text-3xl text-gray-500 hover:text-primary transition duration-300"><i className="fab fa-github"></i></a>)}
+                  {contact.instagram && (<a href={contact.instagram} className="text-3xl text-gray-500 hover:text-primary transition duration-300"><i className="fab fa-instagram"></i></a>)}
+                  {contact.facebook && (<a href={contact.facebook} className="text-3xl text-gray-500 hover:text-primary transition duration-300"><i className="fab fa-facebook"></i></a>)}
+                  {contact.linktree && (<a href={contact.linktree} className="text-3xl text-gray-500 hover:text-primary transition duration-300"><i className="fas fa-link"></i></a>)}
                 </div>
               </div>
             )}
@@ -116,22 +108,21 @@ export default function ContactSection() {
 
           {/* SISI KANAN - FORMULIR KONTAK */}
           <div className="md:w-1/2">
-            <form className="bg-dark rounded-xl p-8 shadow-lg" onSubmit={handleSubmit}>
-              {/* 4. Ganti teks pada formulir */}
+            <form className="bg-white dark:bg-dark rounded-xl p-8 shadow-lg border border-gray-300 dark:border-gray-700" onSubmit={handleSubmit}>
               <h3 className="text-2xl font-semibold mb-6 text-primary">{t('qna.title')}</h3>
               <div className="mb-6">
-                <label htmlFor="name" className="block mb-2 font-medium">{t('qna.name_placeholder')}</label>
-                <input type="text" id="name" value={formData.name} onChange={handleChange} className="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder={t('qna.name_placeholder')} />
+                <label htmlFor="name" className="block mb-2 font-medium text-slate-800 dark:text-white">{t('qna.name_placeholder')}</label>
+                <input type="text" id="name" value={formData.name} onChange={handleChange} className="w-full px-4 py-3 bg-slate-100 dark:bg-darker border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-800 dark:text-white" placeholder={t('qna.name_placeholder')} />
               </div>
               <div className="mb-6">
-                <label htmlFor="email" className="block mb-2 font-medium">{t('qna.email_placeholder')}</label>
-                <input type="email" id="email" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder={t('qna.email_placeholder')} />
+                <label htmlFor="email" className="block mb-2 font-medium text-slate-800 dark:text-white">{t('qna.email_placeholder')}</label>
+                <input type="email" id="email" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 bg-slate-100 dark:bg-darker border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-800 dark:text-white" placeholder={t('qna.email_placeholder')} />
               </div>
               <div className="mb-6">
-                <label htmlFor="message" className="block mb-2 font-medium">{t('qna.message_placeholder')}</label>
-                <textarea id="message" rows="5" value={formData.message} onChange={handleChange} className="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder={t('qna.message_placeholder')}></textarea>
+                <label htmlFor="message" className="block mb-2 font-medium text-slate-800 dark:text-white">{t('qna.message_placeholder')}</label>
+                <textarea id="message" rows="5" value={formData.message} onChange={handleChange} className="w-full px-4 py-3 bg-slate-100 dark:bg-darker border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-slate-800 dark:text-white" placeholder={t('qna.message_placeholder')}></textarea>
               </div>
-              <button type="submit" className="w-full px-6 py-3 bg-primary text-dark font-medium rounded-lg hover:bg-blue-400 transition duration-300">{t('qna.send_button')}</button>
+              <button type="submit" className="w-full px-6 py-3 bg-primary text-white dark:text-dark font-semibold rounded-lg hover:bg-sky-600 dark:hover:bg-blue-400 transition duration-300">{t('qna.send_button')}</button>
             </form>
           </div>
         </div>

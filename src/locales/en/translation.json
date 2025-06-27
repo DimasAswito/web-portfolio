@@ -32,7 +32,7 @@
   },
   "projects": {
     "title": "My Projects",
-    "": "View Project"
+    "link": "View Project"
   },
   "certificates": {
     "title": "Certificates & Achievements",

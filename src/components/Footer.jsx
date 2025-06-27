@@ -1,19 +1,14 @@
 import React from 'react';
-import { FaHeart, FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa'; // FaHeart ditambahkan
+import { FaLinkedin, FaEnvelope, FaPhone, FaHeart } from 'react-icons/fa'; 
 import { Link as ScrollLink } from 'react-scroll';
-
-// 1. Impor hook useTranslation
 import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
-  // 2. Panggil hook untuk mendapatkan fungsi 't'
   const { t } = useTranslation();
-
-  // Array ini berisi kunci untuk navigasi
   const links = ['home', 'about', 'education', 'experience', 'projects', 'contact'];
 
   return (
-    <footer className="py-8 bg-dark border-t border-gray-800">
+    <footer className="py-8 bg-slate-200 dark:bg-dark border-t border-slate-300 dark:border-gray-800">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
@@ -28,27 +23,25 @@ export default function Footer() {
                 to={link}
                 smooth={true}
                 duration={500}
-                className="text-gray-400 hover:text-primary transition duration-300 cursor-pointer capitalize"
+                className="text-slate-600 dark:text-gray-400 hover:text-primary transition duration-300 cursor-pointer capitalize font-medium"
               >
-                {/* 3. Gunakan t() untuk menerjemahkan label dari kunci di array */}
                 {t(`navbar.${link}`)}
               </ScrollLink>
             ))}
           </div>
           <div className="flex space-x-4">
-            <a href="https://www.linkedin.com/in/aswito-406ab0216/" target="_blank" rel="noopener noreferrer" className="text-xl text-gray-400 hover:text-primary transition duration-300">
+            <a href="https://www.linkedin.com/in/aswito-406ab0216/" target="_blank" rel="noopener noreferrer" className="text-xl text-slate-500 dark:text-gray-400 hover:text-primary transition duration-300">
               <FaLinkedin />
             </a>
-            <a href="mailto:dimasaswito@gmail.com" className="text-xl text-gray-400 hover:text-primary transition duration-300">
+            <a href="mailto:dimasaswito@gmail.com" className="text-xl text-slate-500 dark:text-gray-400 hover:text-primary transition duration-300">
               <FaEnvelope />
             </a>
-            <a href="tel:082116848487" className="text-xl text-gray-400 hover:text-primary transition duration-300">
+            <a href="wa.me/6282116848497" className="text-xl text-slate-500 dark:text-gray-400 hover:text-primary transition duration-300">
               <FaPhone />
             </a>
           </div>
         </div>
-        <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
-          {/* 4. Ganti teks hak cipta */}
+        <div className="mt-8 pt-8 border-t border-slate-300 dark:border-gray-800 text-center text-slate-500 dark:text-gray-500 text-sm">
           <p>&copy; {new Date().getFullYear()} Dimas Aswito. {t('footer.rights')}</p>
         </div>
       </div>

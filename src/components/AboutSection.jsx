@@ -18,7 +18,6 @@ const sampleTechStack = [
 ];
 
 export default function AboutSection() {
-  // Hook useTranslation sudah ada di kode Anda, ini sudah benar.
   const { t } = useTranslation();
   
   const [about, setAbout] = useState({
@@ -57,26 +56,24 @@ export default function AboutSection() {
   return (
     <>
       <style>{marqueeStyles}</style>
-      <section id="about" className="py-20 overflow-hidden bg-dark">
+      <section id="about" className="py-20 overflow-hidden bg-slate-300 dark:bg-dark">
         <div className="container mx-auto px-6">
-          {/* 1. Ganti teks judul utama */}
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('about.title')}</h2>
           
-          {/* Kontainer untuk deskripsi dan tag */}
-          <div className="max-w-3xl mx-auto text-center mb-20"> {/* Ditambah margin bawah */}
+          <div className="max-w-3xl mx-auto text-center mb-20">
             {about.description.map((para, index) => (
-              <p key={index} className="text-lg mb-6 text-gray-300">{para}</p>
+              <p key={index} className="text-lg mb-6 text-slate-700 dark:text-gray-300">{para}</p>
             ))}
             <div className="flex flex-wrap gap-3 justify-center">
               {about.tags.map((tag, index) => (
-                <span key={index} className="px-4 py-2 bg-blue-900/40 text-primary rounded-full text-sm">{tag}</span>
+                <span key={index} className="px-4 py-2 bg-primary/10 text-primary dark:bg-blue-900/40 rounded-full text-sm font-medium">
+                  {tag}
+                </span>
               ))}
             </div>
           </div>
 
-          {/* Kontainer untuk Tech Stack */}
-          <div className="w-full text-center mb-20"> {/* Ditambah margin bawah */}
-            {/* 2. Ganti teks judul Tech Stack */}
+          <div className="w-full text-center mb-20">
             <h3 className="md:text-2xl font-bold mb-7 gradient-text">{t('about.techStackTitle')}</h3>
             <div 
               className="w-full inline-flex flex-nowrap overflow-hidden" 
@@ -90,16 +87,14 @@ export default function AboutSection() {
                       alt={tech.name}
                       className="h-16 w-16 object-contain filter grayscale transition-all duration-300 hover:grayscale-0"
                     />
-                    <p className="mt-2 text-sm text-gray-400">{tech.name}</p>
+                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{tech.name}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
           
-          {/* Kontainer untuk Kontribusi GitHub */}
           <div className="flex flex-col items-center text-center">
-            {/* 3. Ganti teks judul GitHub */}
             <h3 className="md:text-2xl font-bold mb-8 gradient-text">{t('about.githubTitle')}</h3>
             <div className="w-full max-w-xl md:max-w-2xl lg:max-w-3xl px-4">
               <img
@@ -108,9 +103,8 @@ export default function AboutSection() {
                 alt="Snake animation GitHub contributions"
               />
             </div>
-            <h5 className="text-sm text-gray-500 mt-6"> 
+            <h5 className="text-sm text-gray-600 dark:text-gray-500 mt-6"> 
               <a href={`https://github.com/${GITHUB_USERNAME}`} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors duration-300">
-                {/* 4. Ganti teks link GitHub */}
                 {t('about.githubLink')}
               </a>
             </h5>

@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import { supabase } from '../supabaseClient';
 
-// 1. Impor hook useTranslation
 import { useTranslation } from 'react-i18next';
 
 export default function HeroSection() {
-  // 2. Panggil hook untuk mendapatkan fungsi 't'
   const { t } = useTranslation();
 
   const [heroData, setHeroData] = useState({
@@ -36,35 +34,40 @@ export default function HeroSection() {
       <div className="container mx-auto px-6 py-16 md:py-24">
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-12 md:mb-0">
-            {/* 3. Ganti teks statis dengan fungsi t() */}
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            
+            <h1 className="text-4xl md:text-6xl font-bold mb-4 text-slate-900 dark:text-white">
               {t('home.greeting')} <span className="gradient-text">{heroData.name}</span>
             </h1>
+            
             <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-primary">
               {heroData.tagline}
             </h2>
-            <p className="text-lg mb-8 text-gray-300 max-w-lg">
+
+            <p className="text-lg mb-8 text-slate-700 dark:text-gray-300 max-w-lg">
               {heroData.description}
             </p>
+
             <div className="flex space-x-4">
               <ScrollLink
                 to="contact"
                 smooth={true}
                 duration={500}
-                className="cursor-pointer px-6 py-3 bg-primary text-dark font-medium rounded-lg hover:bg-blue-400 transition duration-300"
+                className="cursor-pointer px-6 py-3 bg-primary text-white font-semibold rounded-lg shadow-lg shadow-primary/20 hover:bg-sky-600 transition duration-300"
               >
                 {t('home.contact_me')}
               </ScrollLink>
+
               <ScrollLink
                 to="projects"
                 smooth={true}
                 duration={500}
-                className="cursor-pointer px-6 py-3 border border-primary text-primary font-medium rounded-lg hover:bg-blue-900/30 transition duration-300"
+                className="cursor-pointer px-6 py-3 border border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white dark:hover:bg-blue-900/30 dark:hover:text-primary transition duration-300"
               >
                 {t('home.view_projects')}
               </ScrollLink>
             </div>
           </div>
+
           <div className="md:w-1/2 flex justify-center">
             <div className="relative w-64 h-64 md:w-80 md:h-80">
               <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl animate-pulse-slow"></div>

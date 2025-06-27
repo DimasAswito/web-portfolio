@@ -53,7 +53,6 @@ export default function CertificateSection() {
   const { t } = useTranslation();
   const [certificates, setCertificates] = useState([]);
   const [loading, setLoading] = useState(true);
-  // 1. State untuk melacak jumlah sertifikat yang ditampilkan
   const [visibleCount, setVisibleCount] = useState(3);
 
   const formatDisplayDate = (dateString) => {
@@ -84,24 +83,22 @@ export default function CertificateSection() {
     fetchCertificates();
   }, []);
 
-  // 2. Fungsi untuk menambah jumlah sertifikat yang terlihat
   const handleLoadMore = () => {
     setVisibleCount(prevCount => prevCount + 3);
   };
 
   return (
-    <section id="certificates" className="py-20 bg-dark">
+    <section id="certificates" className="py-20 bg-slate-300 dark:bg-dark">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('certificates.title')}</h2>
         
         {loading ? (
-          <p className="text-center text-gray-400">Loading certificates...</p>
+          <p className="text-center text-slate-500 dark:text-gray-400">Loading certificates...</p>
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* 3. Gunakan .slice() untuk menampilkan sertifikat berdasarkan visibleCount */}
               {certificates.slice(0, visibleCount).map((cert) => (
-                <div key={cert.id} className="bg-darker rounded-xl shadow-lg card-hover flex flex-col overflow-hidden">
+                <div key={cert.id} className="bg-white dark:bg-darker rounded-xl shadow-md dark:shadow-lg card-hover flex flex-col overflow-hidden border border-gray-200 dark:border-transparent">
                   <div className="aspect-w-16 aspect-h-9 w-full">
                     <CertificateDisplay imageUrl={cert.img} altText={cert.certificate_name} />
                   </div>
@@ -109,8 +106,7 @@ export default function CertificateSection() {
                     {Array.isArray(cert.tag) && cert.tag.length > 0 && (
                       <div className="flex flex-wrap gap-2 mb-3">
                         {cert.tag.map((t, index) => (
-                          // 5. Ganti warna tag menjadi biru terang
-                          <span key={index} className="text-xs bg-sky-600/80 text-sky-100 px-2 py-1 rounded-full">
+                          <span key={index} className="text-xs bg-sky-100 dark:bg-sky-600/80 text-sky-800 dark:text-sky-100 px-2 py-1 rounded-full font-medium">
                             {t}
                           </span>
                         ))}
@@ -119,7 +115,7 @@ export default function CertificateSection() {
                     <h3 className="text-lg font-semibold text-primary mb-2 flex-grow">
                       {cert.certificate_name}
                     </h3>
-                    <div className="flex items-center text-sm text-gray-400 mb-6">
+                    <div className="flex items-center text-sm text-slate-500 dark:text-gray-400 mb-6">
                       <FaCalendarAlt className="mr-2" />
                       <span>{t('certificates.obtainedOn')} {formatDisplayDate(cert.get_month)}</span>
                     </div>
@@ -128,7 +124,7 @@ export default function CertificateSection() {
                         href={cert.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-auto inline-block text-center w-full px-4 py-2 bg-primary/20 text-primary rounded-lg font-semibold hover:bg-primary hover:text-dark transition-colors duration-300"
+                        className="mt-auto inline-block text-center w-full px-4 py-2 bg-primary/10 dark:bg-primary/20 text-primary rounded-lg font-semibold hover:bg-primary hover:text-white dark:hover:text-dark transition-colors duration-300"
                       >
                         {t('certificates.viewCredential')} <FaExternalLinkAlt className="inline ml-2" />
                       </a>
@@ -138,12 +134,11 @@ export default function CertificateSection() {
               ))}
             </div>
 
-            {/* 4. Tampilkan tombol "Load More" jika masih ada sertifikat yang belum ditampilkan */}
             {visibleCount < certificates.length && (
               <div className="text-center mt-12">
                 <button
                   onClick={handleLoadMore}
-                  className="px-8 py-3 bg-primary/20 text-primary font-semibold rounded-lg hover:bg-primary hover:text-dark transition-colors duration-300"
+                  className="px-8 py-3 bg-primary/10 dark:bg-primary/20 text-primary font-semibold rounded-lg hover:bg-primary hover:text-white dark:hover:text-dark transition-colors duration-300"
                 >
                   {t('certificates.loadMore')}
                 </button>

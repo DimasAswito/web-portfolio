@@ -32,7 +32,8 @@
   },
   "projects": {
     "title": "Proyek Saya",
-    "link": "Lihat Proyek"
+    "link": "Lihat Proyek",
+    "load_more": "Lihat Proyek Lainnya"
   },
   "certificates": {
     "title": "Sertifikat & Pencapaian",

@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../supabaseClient'; // Pastikan path ini benar
-import { FaEdit, FaTrash, FaSave, FaTimes, FaSearch, FaEnvelope, FaUser, FaCommentDots } from 'react-icons/fa';
+import { FaSearch, FaEnvelope, FaUser, FaCommentDots } from 'react-icons/fa';
 
 // Helper function untuk format tanggal jika ada kolom timestamp (misal: created_at)
 // Jika tidak ada, Anda bisa menghapus atau menyesuaikan ini.
-const formatTimestamp = (timestamp) => {
-  if (!timestamp) return '-';
-  try {
-    return new Date(timestamp).toLocaleDateString('id-ID', {
-      day: '2-digit', month: 'short', year: 'numeric',
-      hour: '2-digit', minute: '2-digit'
-    });
-  } catch (e) {
-    return timestamp;
-  }
-};
+// const formatTimestamp = (timestamp) => {
+//   if (!timestamp) return '-';
+//   try {
+//     return new Date(timestamp).toLocaleDateString('id-ID', {
+//       day: '2-digit', month: 'short', year: 'numeric',
+//       hour: '2-digit', minute: '2-digit'
+//     });
+//   } catch (e) {
+//     return timestamp;
+//   }
+// };
 
 /*
 // Komponen Form untuk Edit QnA (dikomentari, jika diperlukan nanti)

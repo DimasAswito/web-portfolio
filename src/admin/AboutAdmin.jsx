@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../supabaseClient'; 
-import { FaPlus, FaTrash, FaSave, FaSync } from 'react-icons/fa';
+import { FaPlus, FaTrash, FaSync } from 'react-icons/fa';
 
-const socialIconMapping = {
-  default: <FaPlus className="mr-2 text-gray-400" /> 
-};
 
 const AboutAdmin = () => {
   const [aboutData, setAboutData] = useState({

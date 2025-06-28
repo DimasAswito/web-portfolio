@@ -32,7 +32,8 @@
   },
   "projects": {
     "title": "My Projects",
-    "link": "View Project"
+    "link": "View Project",
+    "load_more": "View More Projects"
   },
   "certificates": {
     "title": "Certificates & Achievements",

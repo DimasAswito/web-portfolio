@@ -36,8 +36,7 @@ export default function EducationSection() {
         
         <div className="max-w-3xl mx-auto">
           {educations.map((edu) => (
-            <div key={edu.id} className="relative timeline-item">
-              <div className="timeline-dot"></div>              
+            <div key={edu.id} className="relative mb-8 last:mb-0">
                 <div className="bg-white dark:bg-dark rounded-xl p-6 shadow-md dark:shadow-lg card-hover border border-gray-200 dark:border-transparent">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-semibold text-primary">

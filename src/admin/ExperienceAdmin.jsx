@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import { supabase } from '../supabaseClient'; // Pastikan path ini benar
-import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes, FaImage } from 'react-icons/fa';
 
 // Helper function untuk format tanggal (tetap sama)
 const formatDateToNamaBulanTahun = (dateStringYyyyMm) => {
@@ -21,7 +21,7 @@ const formatDateToNamaBulanTahun = (dateStringYyyyMm) => {
 };
 
 // Komponen Form untuk Pengalaman (diganti dari EducationFormFields)
-const ExperienceFormFields = memo(({ data, onChange, isEditMode = false }) => {
+const ExperienceFormFields = memo(({ data, onChange, isEditMode = false, onLogoFileChange, isUploadingLogo }) => {
   const handleMonthInputChange = (e) => {
     const { name, value } = e.target;
     onChange({ target: { name, value, type: 'month' } });
@@ -30,6 +30,32 @@ const ExperienceFormFields = memo(({ data, onChange, isEditMode = false }) => {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+        <div className="md:col-span-2">
+            <label htmlFor={isEditMode ? "edit_exp_logo_upload" : "exp_logo_upload"} className="block mb-2 text-sm font-medium text-slate-300">Logo Perusahaan</label>
+            <div className="mt-1 flex items-center gap-x-4">
+                {data.logo_url && (
+                    <img src={data.logo_url} alt="Logo preview" className="h-16 w-16 rounded-lg object-contain bg-slate-600 p-1" />
+                )}
+                {!data.logo_url && (
+                    <div className="h-16 w-16 rounded-lg bg-slate-600 flex items-center justify-center">
+                      <FaImage className="text-3xl text-slate-400" />
+                    </div>
+                )}
+                <input 
+                    type="file" 
+                    id={isEditMode ? "edit_exp_logo_upload" : "exp_logo_upload"}
+                    onChange={onLogoFileChange} 
+                    className="hidden" 
+                    accept="image/png, image/jpeg, image/jpg, image/webp, image/svg" 
+                />
+                <label
+                    htmlFor={isEditMode ? "edit_exp_logo_upload" : "exp_logo_upload"}
+                    className="cursor-pointer rounded-lg bg-slate-600 px-4 py-2.5 text-sm font-medium text-slate-200 shadow-sm hover:bg-slate-500"
+                >
+                    {isUploadingLogo ? 'Mengupload...' : 'Ubah Logo'}
+                </label>
+            </div>
+        </div>
         <div>
           <label htmlFor={isEditMode ? "edit_exp_name" : "exp_name"} className="block mb-1 text-sm font-medium text-slate-300">Nama Perusahaan/Organisasi</label>
           <input
@@ -131,9 +157,11 @@ const ExperienceAdmin = () => {
     description: [],
     start_month: '',
     end_month: '',
+    logo_url: '',
     is_present: false,
   });
   const [editingExperience, setEditingExperience] = useState(null);
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -142,6 +170,33 @@ const ExperienceAdmin = () => {
   const [successMessage, setSuccessMessage] = useState('');
 
   const clearMessages = useCallback(() => { setTimeout(() => { setError(''); setSuccessMessage(''); }, 4000); }, []);
+
+  // Handler untuk upload logo
+  const handleLogoUpload = async (file, formType) => {
+    if (!file) return;
+    setIsUploadingLogo(true); setError('');
+    const fileName = `${Date.now()}_${file.name.replace(/\s/g, '_')}`;
+    const filePath = `public/experience_logos/${fileName}`;
+
+    try {
+      const { error: uploadError } = await supabase.storage.from("portfolio").upload(filePath, file, { upsert: true });
+      if (uploadError) throw uploadError;
+      const { data: publicUrlData } = supabase.storage.from("portfolio").getPublicUrl(filePath);
+      const publicUrl = publicUrlData.publicUrl;
+
+      if (formType === 'new') {
+        setNewExperience(prev => ({ ...prev, logo_url: publicUrl }));
+      } else if (formType === 'edit' && editingExperience) {
+        setEditingExperience(prev => ({ ...prev, logo_url: publicUrl }));
+      }
+      setSuccessMessage("Logo berhasil diupload.");
+    } catch (err) {
+      setError("Upload logo gagal: " + err.message);
+    } finally {
+      setIsUploadingLogo(false);
+      // clearMessages(); // Mungkin tidak perlu clear success message agar user tahu
+    }
+  };
 
   const fetchExperiences = useCallback(async () => {
     setLoading(true); setError('');
@@ -193,8 +248,8 @@ const ExperienceAdmin = () => {
 
   const resetNewExperienceForm = () => {
     setNewExperience({
-      name: '', position: '', location: '', description: [],
-      start_month: '', end_month: '', is_present: false,
+      name: '', position: '', location: '', logo_url: '', 
+      description: [], start_month: '', end_month: '', is_present: false,
     });
   };
 
@@ -278,10 +333,15 @@ const ExperienceAdmin = () => {
         {successMessage && <div className="mb-6 p-3 bg-green-500/30 text-green-300 rounded-md text-sm">{successMessage}</div>}
 
         <form onSubmit={handleAddExperience} className="mb-10 p-6 bg-slate-800 rounded-lg shadow-xl">
-          <h2 className="text-xl font-semibold mb-6 text-indigo-300">Tambah Pengalaman Kerja Baru</h2>
-          <ExperienceFormFields data={newExperience} onChange={handleNewExperienceChange} />
+                <h2 className="text-xl font-semibold mb-6 text-indigo-300">Tambah Pengalaman Kerja Baru</h2>
+                <ExperienceFormFields 
+                    data={newExperience} 
+                    onChange={handleNewExperienceChange} 
+                    onLogoFileChange={(e) => handleLogoUpload(e.target.files[0], 'new')}
+                    isUploadingLogo={isUploadingLogo}
+                />
           <div className="mt-6 text-right">
-            <button type="submit" disabled={saving} className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-lg shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition-colors">
+            <button type="submit" disabled={saving || isUploadingLogo} className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-lg shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition-colors">
               {saving ? 'Menyimpan...' : <><FaPlus className="inline mr-2" /> Tambah Pengalaman</>}
             </button>
           </div>
@@ -310,7 +370,7 @@ const ExperienceAdmin = () => {
                             <td className="px-2 py-4 whitespace-nowrap">
                                 {formatDateToNamaBulanTahun(exp.start_month)} - {formatDateToNamaBulanTahun(exp.end_month)}
                             </td>
-                            <td className="px-6 py-4 text-center">
+                            <td className="px-2 py-4 text-center">
                             <button onClick={() => openEditModal(exp)} className="font-medium text-indigo-400 hover:text-indigo-300 mr-3 p-1" aria-label="Edit"> <FaEdit size={16}/> </button>
                             <button onClick={() => handleDeleteExperience(exp.id)} disabled={deleting} className="font-medium text-red-500 hover:text-red-400 p-1 disabled:opacity-50" aria-label="Hapus"> <FaTrash size={16}/> </button>
                             </td>
@@ -330,10 +390,16 @@ const ExperienceAdmin = () => {
                 <button onClick={closeEditModal} className="text-slate-400 hover:text-slate-200 p-1" aria-label="Tutup modal"> <FaTimes size={24} /> </button>
               </div>
               <form onSubmit={handleUpdateExperience}>
-                <ExperienceFormFields data={editingExperience} onChange={handleEditExperienceChange} isEditMode={true} />
+                            <ExperienceFormFields 
+                                data={editingExperience} 
+                                onChange={handleEditExperienceChange} 
+                                isEditMode={true}
+                                onLogoFileChange={(e) => handleLogoUpload(e.target.files[0], 'edit')}
+                                isUploadingLogo={isUploadingLogo}
+                            />
                 <div className="mt-8 flex justify-end gap-3">
                   <button type="button" onClick={closeEditModal} className="px-6 py-2.5 bg-slate-600 hover:bg-slate-500 text-slate-200 font-medium rounded-lg transition-colors"> Batal </button>
-                  <button type="submit" disabled={saving} className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-lg shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition-colors">
+                  <button type="submit" disabled={saving || isUploadingLogo} className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-lg shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition-colors">
                     {saving ? 'Menyimpan...' : <><FaSave className="inline mr-2" /> Simpan Perubahan</>}
                   </button>
                 </div>

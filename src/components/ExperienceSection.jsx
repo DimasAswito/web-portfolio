@@ -47,28 +47,37 @@ export default function ExperienceSection() {
     fetchExperiences();
   }, []);
 
-  const ExperienceCard = ({ exp, isRightSide }) => (
-    <div className="bg-white dark:bg-darker rounded-xl p-6 shadow-md dark:shadow-lg card-hover border border-gray-200 dark:border-transparent">
-      <div className="flex justify-between items-start mb-2">
-        <h3 className="text-lg md:text-xl font-semibold text-primary">{exp.name}</h3>
-        <span className="text-xs md:text-sm bg-primary/10 dark:bg-primary/20 text-primary px-3 py-1 rounded-full font-medium whitespace-nowrap">
-          {formatDisplayDate(exp.start_month)} - {formatDisplayDate(exp.end_month)}
-        </span>
-      </div>
-      <p className="text-slate-700 dark:text-gray-300 mb-2 font-semibold text-sm md:text-base">{exp.position}</p>
-      <p className="text-slate-500 dark:text-gray-400 text-sm md:text-base">{exp.location}</p>
-      {Array.isArray(exp.description) && exp.description.length > 0 && (
-        <ul className="mt-4 space-y-3 text-slate-600 dark:text-gray-300 text-sm md:text-base">
-          {exp.description.filter(point => point && point.trim() !== "").map((point, i) => (
-            <li key={i} className="flex items-start">
-              <FaCode className="text-primary mt-1 mr-3 flex-shrink-0" />
-              <span>{point}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+const ExperienceCard = ({ exp }) => (
+    <div className="bg-white dark:bg-darker rounded-xl p-6 shadow-md dark:shadow-lg card-hover border border-gray-200 dark:border-transparent flex items-start gap-5">
+        {exp.logo_url && (
+            <img 
+                src={exp.logo_url} 
+                alt={`${exp.name} logo`}
+                className="w-14 h-14 rounded-lg object-contain bg-white p-1 shadow-sm mt-1"
+            />
+        )}        
+        <div className="flex-1">
+            <div className="flex justify-between items-start mb-2">
+                <h3 className="text-lg md:text-xl font-semibold text-primary">{exp.name}</h3>
+                <span className="text-xs md:text-sm bg-primary/10 dark:bg-primary/20 text-primary px-3 py-1 rounded-full font-medium whitespace-nowrap ml-2">
+                    {formatDisplayDate(exp.start_month)} - {formatDisplayDate(exp.end_month)}
+                </span>
+            </div>
+            <p className="text-slate-700 dark:text-gray-300 mb-2 font-semibold text-sm md:text-base">{exp.position}</p>
+            <p className="text-slate-500 dark:text-gray-400 text-sm md:text-base">{exp.location}</p>
+            {Array.isArray(exp.description) && exp.description.length > 0 && (
+                <ul className="mt-4 space-y-3 text-slate-600 dark:text-gray-300 text-sm md:text-base">
+                {exp.description.filter(point => point && point.trim() !== "").map((point, i) => (
+                    <li key={i} className="flex items-start">
+                    <FaCode className="text-primary mt-1 mr-3 flex-shrink-0" />
+                    <span>{point}</span>
+                    </li>
+                ))}
+                </ul>
+            )}
+        </div>
     </div>
-  );
+);
 
   return (
     <section id="experience" className="py-20 bg-slate-300 dark:bg-dark">

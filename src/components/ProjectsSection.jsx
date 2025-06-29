@@ -50,7 +50,7 @@ export default function ProjectSection() {
   };
 
   return (
-    <section id="projects" className="py-20 bg-white dark:bg-darker">
+    <section id="projects" className=" flex items-center py-20">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('projects.title')}</h2>
         

@@ -32,7 +32,7 @@
   },
   "projects": {
     "title": "Proyek Saya",
-    "link": "Lihat Proyek",
+    "view_project": "Lihat Proyek",
     "load_more": "Lihat Proyek Lainnya"
   },
   "certificates": {

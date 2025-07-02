@@ -4,6 +4,7 @@ import { supabase } from '../supabaseClient';
 
 import { useTranslation } from 'react-i18next';
 
+//will add glow effect on public layout
 export default function HeroSection() {
   const { t } = useTranslation();
 

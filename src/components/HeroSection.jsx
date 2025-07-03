@@ -4,7 +4,6 @@ import { supabase } from '../supabaseClient';
 
 import { useTranslation } from 'react-i18next';
 
-//will add glow effect on public layout
 export default function HeroSection() {
   const { t } = useTranslation();
 
@@ -53,7 +52,7 @@ export default function HeroSection() {
                 to="contact"
                 smooth={true}
                 duration={500}
-                className="cursor-pointer px-6 py-3 bg-primary text-white font-semibold rounded-lg shadow-lg shadow-primary/20 hover:bg-sky-600 transition duration-300"
+                className="cursor-pointer px-6 py-3 bg-primary text-white font-semibold rounded-lg shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/50 hover:-translate-y-1 transition-all duration-300"
               >
                 {t('home.contact_me')}
               </ScrollLink>
@@ -62,7 +61,7 @@ export default function HeroSection() {
                 to="projects"
                 smooth={true}
                 duration={500}
-                className="cursor-pointer px-6 py-3 border border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white dark:hover:bg-blue-900/30 dark:hover:text-primary transition duration-300"
+                className="cursor-pointer px-6 py-3 border border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white hover:shadow-lg hover:shadow-primary/40 hover:-translate-y-1 transition-all duration-300"
               >
                 {t('home.view_projects')}
               </ScrollLink>

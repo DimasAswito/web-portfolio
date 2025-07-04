@@ -88,7 +88,12 @@ export default function ProjectSection() {
                   )}
                   
                   {project.detail_link && (
-                      <a href={project.detail_link} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-sky-700 dark:hover:text-sky-400 flex items-center font-semibold text-sm">
+                      <a 
+                        href={project.detail_link} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="inline-flex items-center px-4 py-2 border border-primary text-primary font-semibold rounded-lg text-sm transition-all duration-300 hover:bg-primary hover:text-white hover:shadow-lg hover:shadow-primary/40 hover:-translate-y-px"
+                      >
                        <span>{t('projects.view_project')}</span>
                        <FaExternalLinkAlt className="ml-2" />
                      </a>
@@ -103,7 +108,7 @@ export default function ProjectSection() {
           <div className="text-center mt-12">
             <button
               onClick={handleLoadMore}
-              className="px-8 py-3 bg-primary/10 dark:bg-primary/20 text-primary font-semibold rounded-lg hover:bg-primary hover:text-white dark:hover:text-dark transition-colors duration-300"
+              className="px-8 py-3 bg-primary/10 dark:bg-primary/20 text-primary font-semibold rounded-lg transition-all duration-300 hover:bg-primary hover:text-white dark:hover:text-dark hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-1"
             >
               {t('projects.load_more', 'Lihat Proyek Lainnya')}
             </button>

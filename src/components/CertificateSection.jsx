@@ -138,7 +138,7 @@ export default function CertificateSection() {
               <div className="text-center mt-12">
                 <button
                   onClick={handleLoadMore}
-                  className="px-8 py-3 bg-primary/10 dark:bg-primary/20 text-primary font-semibold rounded-lg hover:bg-primary hover:text-white dark:hover:text-dark transition-colors duration-300"
+                  className="px-8 py-3 bg-primary/10 dark:bg-primary/20 text-primary font-semibold rounded-lg transition-all duration-300 hover:bg-primary hover:text-white dark:hover:text-dark hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-1"
                 >
                   {t('certificates.loadMore')}
                 </button>

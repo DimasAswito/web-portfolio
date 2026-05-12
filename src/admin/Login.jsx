@@ -29,7 +29,7 @@ const Login = () => {
     }
   };
   checkSession();
-}, []);
+  }, [navigate]);
 
 
   return (

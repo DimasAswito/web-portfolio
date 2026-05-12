@@ -56,12 +56,18 @@ export default function ProjectSection() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.slice(0, visibleCount).map((project, index) => (
-            <div key={index} className="bg-white dark:bg-dark rounded-xl p-6 shadow-lg dark:shadow-xl card-hover flex flex-col border border-gray-100 dark:border-transparent">
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-xs bg-primary/10 dark:bg-primary/20 text-primary px-2 py-1 rounded-full font-medium">
-                  {formatDisplayDate(project.start_month)} - {formatDisplayDate(project.end_month)}
-                </span>
-              </div>
+            <div key={index} className="bg-white dark:bg-dark rounded-xl overflow-hidden shadow-lg dark:shadow-xl card-hover flex flex-col border border-gray-100 dark:border-transparent">
+              {project.img && (
+                <div className="w-full h-48 overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                  <img src={project.img} alt={project.project_name} className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+                </div>
+              )}
+              <div className="p-6 flex flex-col flex-grow">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-xs bg-primary/10 dark:bg-primary/20 text-primary px-2 py-1 rounded-full font-medium">
+                    {formatDisplayDate(project.start_month)} - {formatDisplayDate(project.end_month)}
+                  </span>
+                </div>
               <h3 className="text-xl font-semibold mb-3 text-primary">
                 {project.project_name}
               </h3>
@@ -100,6 +106,7 @@ export default function ProjectSection() {
                   )}
                 </div>
               )}
+              </div>
             </div>
           ))}
         </div>

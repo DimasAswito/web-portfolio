@@ -56,10 +56,10 @@ const ExperienceCard = ({ exp }) => (
                 className="w-14 h-14 rounded-lg object-contain bg-white p-1 shadow-sm mt-1"
             />
         )}        
-        <div className="flex-1">
-            <div className="flex justify-between items-start mb-2">
-                <h3 className="text-lg md:text-xl font-semibold text-primary">{exp.name}</h3>
-                <span className="text-xs md:text-sm bg-primary/10 dark:bg-primary/20 text-primary px-3 py-1 rounded-full font-medium whitespace-nowrap ml-2">
+        <div className="flex-1 min-w-0">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-2">
+                <h3 className="text-lg md:text-xl font-semibold text-primary break-words">{exp.name}</h3>
+                <span className="text-xs md:text-sm bg-primary/10 dark:bg-primary/20 text-primary px-3 py-1 rounded-full font-medium sm:whitespace-nowrap w-fit">
                     {formatDisplayDate(exp.start_month)} - {formatDisplayDate(exp.end_month)}
                 </span>
             </div>

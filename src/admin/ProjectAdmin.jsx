@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import { supabase } from '../supabaseClient'; 
-import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes, FaLink, FaGithub } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes, FaLink, FaGithub, FaUpload } from 'react-icons/fa';
 
 // Helper function untuk format tanggal (tetap sama)
 const formatDateToNamaBulanTahun = (dateStringYyyyMm) => {
@@ -28,7 +28,10 @@ const ProjectFormFields = memo(({
   currentTagValue, // Untuk nilai input tag saat ini
   onCurrentTagChange, // Handler untuk perubahan input tag
   onAddTag, // Handler untuk menambah tag
-  onRemoveTag // Handler untuk menghapus tag
+  onRemoveTag, // Handler untuk menghapus tag
+  onImageFileChange,
+  imagePreviewUrl,
+  isUploadingImage
 }) => {
   const handleMonthInputChange = (e) => {
     const { name, value } = e.target;
@@ -142,6 +145,34 @@ const ProjectFormFields = memo(({
            </div>
         </div>
 
+        {/* Upload Gambar Proyek */}
+        <div className="md:col-span-2">
+            <label htmlFor={isEditMode ? "edit_project_img_upload" : "project_img_upload"} className="block mb-1 text-sm font-medium text-slate-300">Gambar Proyek</label>
+            <div className="mt-1 flex items-center gap-x-4">
+                {imagePreviewUrl && (
+                    <img src={imagePreviewUrl} alt="Preview Proyek" className="h-20 w-auto object-contain rounded-md bg-slate-700 p-1 border border-slate-600" />
+                )}
+                 {!imagePreviewUrl && data.img && (
+                    <img src={data.img} alt="Proyek Tersimpan" className="h-20 w-auto object-contain rounded-md bg-slate-700 p-1 border border-slate-600" />
+                )}
+                <input 
+                    type="file" 
+                    name="img_file"
+                    id={isEditMode ? "edit_project_img_upload" : "project_img_upload"}
+                    onChange={onImageFileChange} 
+                    className="hidden" 
+                    accept="image/png, image/jpeg, image/jpg, image/webp" 
+                />
+                <label
+                    htmlFor={isEditMode ? "edit_project_img_upload" : "project_img_upload"}
+                    className="cursor-pointer rounded-lg bg-slate-600 px-4 py-2.5 text-sm font-medium text-slate-200 shadow-sm hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                    {isUploadingImage ? <><FaUpload className="inline mr-2 animate-ping" /> Mengupload...</> : (imagePreviewUrl || data.img ? 'Ganti Gambar' : 'Pilih Gambar')}
+                </label>
+            </div>
+             {isUploadingImage && <p className="text-xs text-slate-400 mt-1">Mohon tunggu...</p>}
+        </div>
+
         <div>
           <label htmlFor={isEditMode ? "edit_project_start_month" : "project_start_month"} className="block mb-1 text-sm font-medium text-slate-300">Mulai (Bulan & Tahun)</label>
           <input
@@ -188,7 +219,7 @@ const ProjectAdmin = () => {
   const [projects, setProjects] = useState([]);
   const [newProject, setNewProject] = useState({
     project_name: '', description: '', tagline: [], github: '', detail_link: '',
-    start_month: '', end_month: '', is_present: false,
+    start_month: '', end_month: '', is_present: false, img: '',
   });
   const [editingProject, setEditingProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -196,6 +227,10 @@ const ProjectAdmin = () => {
   // State untuk input tag saat ini (dipisah untuk form Add dan Edit)
   const [currentNewTag, setCurrentNewTag] = useState('');
   const [currentEditTag, setCurrentEditTag] = useState('');
+
+  const [newImagePreview, setNewImagePreview] = useState('');
+  const [editImagePreview, setEditImagePreview] = useState('');
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -269,6 +304,43 @@ const ProjectAdmin = () => {
     });
   }, []);
 
+  const handleImageUpload = async (file, formType) => {
+    if (!file) return;
+    setIsUploadingImage(true); setError('');
+
+    const fileName = `${Date.now()}_${file.name.replace(/\s/g, '_')}`;
+    const filePath = `public/project/${fileName}`;
+
+    try {
+      const { error: uploadError } = await supabase.storage
+        .from("portfolio")
+        .upload(filePath, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      const { data: publicUrlData } = supabase.storage.from("portfolio").getPublicUrl(filePath);
+      if (!publicUrlData || !publicUrlData.publicUrl) {
+        throw new Error("Gagal mendapatkan URL publik setelah upload.");
+      }
+      const publicUrl = publicUrlData.publicUrl;
+
+      if (formType === 'new') {
+        setNewProject(prev => ({ ...prev, img: publicUrl }));
+        setNewImagePreview(publicUrl);
+      } else if (formType === 'edit' && editingProject) {
+        setEditingProject(prev => ({ ...prev, img: publicUrl }));
+        setEditImagePreview(publicUrl);
+      }
+      setSuccessMessage("Gambar berhasil diupload.");
+
+    } catch (err) {
+      console.error("Image upload error:", err);
+      setError("Upload gambar gagal: " + err.message);
+    } finally {
+      setIsUploadingImage(false);
+      clearMessages();
+    }
+  };
 
   const resetNewProjectForm = () => {
     setNewProject({
@@ -301,13 +373,15 @@ const ProjectAdmin = () => {
         ...proj, 
         tagline: Array.isArray(proj.tagline) ? proj.tagline : [], // Pastikan tagline adalah array
         description: proj.description || '', // Pastikan deskripsi tidak null
-        is_present: isPresent 
+        is_present: isPresent,
+        img: proj.img || ''
     });
+    setEditImagePreview(proj.img || ''); // Reset input tag untuk modal
     setCurrentEditTag(''); // Reset input tag untuk modal
     setIsModalOpen(true);
   };
 
-  const closeEditModal = () => { setEditingProject(null); setIsModalOpen(false); setCurrentEditTag(''); };
+  const closeEditModal = () => { setEditingProject(null); setIsModalOpen(false); setCurrentEditTag(''); setEditImagePreview(''); };
 
   const handleUpdateProject = async (e) => {
     e.preventDefault();
@@ -337,6 +411,18 @@ const ProjectAdmin = () => {
     if (!window.confirm("Apakah Anda yakin ingin menghapus data proyek ini?")) return;
     setDeleting(true); setError(''); setSuccessMessage('');
     try {
+      const projToDelete = projects.find(c => c.id === id);
+      if (projToDelete && projToDelete.img) {
+        const urlObj = new URL(projToDelete.img);
+        const pathParts = urlObj.pathname.split('/portfolio/');
+        if (pathParts.length > 1) {
+          const imagePath = decodeURIComponent(pathParts[1]);
+          if (imagePath && !imagePath.endsWith('/')) {
+            await supabase.storage.from('portfolio').remove([imagePath]);
+          }
+        }
+      }
+
       const { error: deleteError } = await supabase.from('project').delete().eq('id', id); // GANTI NAMA TABEL
       if (deleteError) throw deleteError;
       setSuccessMessage('Data proyek berhasil dihapus!');
@@ -366,9 +452,12 @@ const ProjectAdmin = () => {
             onCurrentTagChange={(e) => setCurrentNewTag(e.target.value)}
             onAddTag={handleAddCurrentNewTag}
             onRemoveTag={handleRemoveNewTag}
+            onImageFileChange={(e) => handleImageUpload(e.target.files[0], 'new')}
+            imagePreviewUrl={newImagePreview}
+            isUploadingImage={isUploadingImage}
           />
           <div className="mt-6 text-right">
-            <button type="submit" disabled={saving} className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-lg shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition-colors">
+            <button type="submit" disabled={saving || isUploadingImage} className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-lg shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition-colors">
               {saving ? 'Menyimpan...' : <><FaPlus className="inline mr-2" /> Tambah Proyek</>}
             </button>
           </div>
@@ -384,6 +473,7 @@ const ProjectAdmin = () => {
                             <th scope="col" className="px-6 py-3">Nama Proyek</th>
                             <th scope="col" className="px-6 py-3 hidden sm:table-cell">Tagline</th>
                             <th scope="col" className="px-6 py-3">Periode</th>
+                            <th scope="col" className="px-6 py-3 hidden md:table-cell">Gambar</th>
                             <th scope="col" className="px-6 py-3 text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -397,6 +487,13 @@ const ProjectAdmin = () => {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                                 {formatDateToNamaBulanTahun(proj.start_month)} - {formatDateToNamaBulanTahun(proj.end_month)}
+                            </td>
+                            <td className="px-6 py-4 hidden md:table-cell">
+                                {proj.img && (
+                                    <a href={proj.img} target="_blank" rel="noopener noreferrer" className="hover:opacity-80">
+                                        <img src={proj.img} alt={proj.project_name} className="h-10 w-auto object-contain rounded"/>
+                                    </a>
+                                )}
                             </td>
                             <td className="px-6 py-4 text-center">
                             <button onClick={() => openEditModal(proj)} className="font-medium text-indigo-400 hover:text-indigo-300 mr-3 p-1" aria-label="Edit"> <FaEdit size={16}/> </button>
@@ -426,10 +523,13 @@ const ProjectAdmin = () => {
                     onCurrentTagChange={(e) => setCurrentEditTag(e.target.value)}
                     onAddTag={handleAddCurrentEditTag}
                     onRemoveTag={handleRemoveEditTag}
+                    onImageFileChange={(e) => handleImageUpload(e.target.files[0], 'edit')}
+                    imagePreviewUrl={editImagePreview}
+                    isUploadingImage={isUploadingImage}
                 />
                 <div className="mt-8 flex justify-end gap-3">
                   <button type="button" onClick={closeEditModal} className="px-6 py-2.5 bg-slate-600 hover:bg-slate-500 text-slate-200 font-medium rounded-lg transition-colors"> Batal </button>
-                  <button type="submit" disabled={saving} className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-lg shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition-colors">
+                  <button type="submit" disabled={saving || isUploadingImage} className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-lg shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition-colors">
                     {saving ? 'Menyimpan...' : <><FaSave className="inline mr-2" /> Simpan Perubahan</>}
                   </button>
                 </div>

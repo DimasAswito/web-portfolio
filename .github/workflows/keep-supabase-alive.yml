@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Query table
         run: |
-          curl -X GET \
-            "${{ secrets.SUPABASE_URL }}/rest/v1/users?select=id&limit=1" \
+          curl -f -X GET \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/header?select=id&limit=1" \
             -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { useTranslation } from 'react-i18next';
 import { ActivityCalendar } from 'react-activity-calendar';
-import SkillsChart from './SkillsChart';
 import GithubStats from './GithubStats';
 import useInView from '../hooks/useInView';
 import { useTheme } from '../ThemeContext';
@@ -141,11 +140,6 @@ export default function AboutSection() {
             </div>
           </div>
           
-          <div className="w-full mb-20">
-            <h3 className="md:text-2xl font-bold mb-8 text-center gradient-text">{t('about.skillsTitle')}</h3>
-            <SkillsChart />
-          </div>
-
           <div className="flex flex-col items-center text-center">
             <h3 className="md:text-2xl font-bold mb-8 gradient-text">{t('about.githubTitle')}</h3>
             <GithubStats />

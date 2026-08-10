@@ -35,7 +35,7 @@ export default function EducationSection() {
     <section
       id="education"
       ref={ref}
-      className={`min-h-screen flex items-center pt-20 reveal ${isVisible ? 'reveal-visible' : ''}`}
+      className={`min-h-screen flex items-center pt-20 ${isVisible ? 'reveal-visible' : 'reveal-left'}`}
     >
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center gradient-text">{t('education.title')}</h2>

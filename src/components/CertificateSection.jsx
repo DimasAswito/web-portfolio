@@ -117,7 +117,7 @@ export default function CertificateSection() {
     <section
       id="certificates"
       ref={ref}
-      className={`py-20 bg-slate-300 dark:bg-dark reveal ${isVisible ? 'reveal-visible' : ''}`}
+      className={`py-20 bg-slate-300 dark:bg-dark ${isVisible ? 'reveal-visible' : 'reveal-left'}`}
     >
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('certificates.title')}</h2>

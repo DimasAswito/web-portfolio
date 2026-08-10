@@ -91,7 +91,7 @@ export default function GuestbookSection() {
     <section
       id="guestbook"
       ref={ref}
-      className={`py-20 reveal ${isVisible ? 'reveal-visible' : ''}`}
+      className={`py-20 ${isVisible ? 'reveal-visible' : 'reveal-right'}`}
     >
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('guestbook.title')}</h2>

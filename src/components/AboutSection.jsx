@@ -101,7 +101,7 @@ export default function AboutSection() {
       <section
         id="about"
         ref={ref}
-        className={`py-20 overflow-hidden bg-slate-300 dark:bg-dark reveal ${isVisible ? 'reveal-visible' : ''}`}
+        className={`py-20 overflow-hidden bg-slate-300 dark:bg-dark ${isVisible ? 'reveal-visible' : 'reveal-bottom'}`}
       >
         <div className="container mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('about.title')}</h2>

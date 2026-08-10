@@ -95,7 +95,7 @@ export default function ProjectSection() {
     <section
       id="projects"
       ref={ref}
-      className={`flex items-center py-20 reveal ${isVisible ? 'reveal-visible' : ''}`}
+      className={`flex items-center py-20 ${isVisible ? 'reveal-visible' : 'reveal-bottom'}`}
     >
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('projects.title')}</h2>

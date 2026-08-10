@@ -14,6 +14,7 @@ import ExperienceSection from './components/ExperienceSection';
 import ProjectsSection from './components/ProjectsSection';
 import CertificateSection from './components/CertificateSection';
 import ContactSection from './components/ContactSection';
+import GuestbookSection from './components/GuestbookSection';
 
 // Komponen admin
 import Login from './admin/Login';
@@ -22,10 +23,12 @@ import HeroAdmin from './admin/HeroAdmin';
 import AboutAdmin from './admin/AboutAdmin';
 import EducationAdmin from './admin/EducationAdmin';
 import ExperienceAdmin from './admin/ExperienceAdmin';
+import SkillAdmin from './admin/SkillAdmin';
 import ProjectsAdmin from './admin/ProjectAdmin';
 import CertificateAdmin from './admin/CertificateAdmin';
 import ContactAdmin from './admin/ContactAdmin';
 import QnAAdmin from './admin/QnAAdmin';
+import GuestbookAdmin from './admin/GuestbookAdmin';
 
 function App() {
   return (
@@ -40,6 +43,7 @@ function App() {
             <ExperienceSection />
             <ProjectsSection />
             <CertificateSection />
+            <GuestbookSection />
             <ContactSection />
           </PublicLayout>
         } />
@@ -78,6 +82,12 @@ function App() {
           </AdminLayout>
         } />
 
+        <Route path="/admin/skill" element={
+          <AdminLayout>
+            <SkillAdmin />
+          </AdminLayout>
+        } />
+
         <Route path="/admin/project" element={
           <AdminLayout>
             <ProjectsAdmin />
@@ -99,6 +109,12 @@ function App() {
         <Route path="/admin/qna" element={
           <AdminLayout>
             <QnAAdmin />
+          </AdminLayout>
+        } />
+
+        <Route path="/admin/guestbook" element={
+          <AdminLayout>
+            <GuestbookAdmin />
           </AdminLayout>
         } />
 

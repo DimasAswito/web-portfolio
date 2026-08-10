@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { useTranslation } from 'react-i18next';
 import { FaCheck } from 'react-icons/fa';
+import useInView from '../hooks/useInView';
 
 export default function EducationSection() {
   const { t } = useTranslation();
+  const [ref, isVisible] = useInView();
   const [educations, setEducations] = useState([]);
 
   const formatDisplayDate = (dateString) => {
@@ -30,7 +32,11 @@ export default function EducationSection() {
   }, []);
 
   return (
-    <section id="education" className="min-h-screen flex items-center pt-20">
+    <section
+      id="education"
+      ref={ref}
+      className={`min-h-screen flex items-center pt-20 reveal ${isVisible ? 'reveal-visible' : ''}`}
+    >
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center gradient-text">{t('education.title')}</h2>
         

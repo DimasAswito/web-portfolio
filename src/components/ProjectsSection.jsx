@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { useTranslation } from 'react-i18next';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaHeart, FaRegHeart } from 'react-icons/fa';
+import useInView from '../hooks/useInView';
+
+const getLikedIdsFromStorage = () => {
+  if (typeof window === 'undefined') return new Set();
+  return new Set(
+    Object.keys(window.localStorage)
+      .filter((key) => key.startsWith('liked_'))
+      .map((key) => key.replace('liked_', ''))
+  );
+};
 
 export default function ProjectSection() {
   const { t } = useTranslation();
+  const [ref, isVisible] = useInView();
   const [projects, setProjects] = useState([]);
-  
+  const [likedIds, setLikedIds] = useState(getLikedIdsFromStorage);
+
   const [visibleCount, setVisibleCount] = useState(6);
+  const [selectedTag, setSelectedTag] = useState(null);
 
   const formatDisplayDate = (dateString) => {
     if (!dateString || dateString === 'Present') {
@@ -49,13 +62,74 @@ export default function ProjectSection() {
     setVisibleCount(prevCount => prevCount + 3);
   };
 
+  const handleLike = async (project) => {
+    const idKey = String(project.id);
+    if (likedIds.has(idKey)) return;
+
+    window.localStorage.setItem(`liked_${idKey}`, '1');
+    setLikedIds(prev => new Set(prev).add(idKey));
+    setProjects(prev =>
+      prev.map(p => (p.id === project.id ? { ...p, likes: (p.likes || 0) + 1 } : p))
+    );
+
+    const { error } = await supabase.rpc('increment_project_likes', { project_id: project.id });
+    if (error) {
+      console.error('Failed to like project:', error);
+    }
+  };
+
+  const allTags = Array.from(
+    new Set(projects.flatMap(project => Array.isArray(project.tagline) ? project.tagline : []))
+  );
+
+  const handleSelectTag = (tag) => {
+    setSelectedTag(prevTag => (prevTag === tag ? null : tag));
+    setVisibleCount(6);
+  };
+
+  const filteredProjects = selectedTag
+    ? projects.filter(project => Array.isArray(project.tagline) && project.tagline.includes(selectedTag))
+    : projects;
+
   return (
-    <section id="projects" className=" flex items-center py-20">
+    <section
+      id="projects"
+      ref={ref}
+      className={`flex items-center py-20 reveal ${isVisible ? 'reveal-visible' : ''}`}
+    >
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('projects.title')}</h2>
-        
+
+        {allTags.length > 0 && (
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
+            <button
+              onClick={() => handleSelectTag(null)}
+              className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors duration-300 ${
+                selectedTag === null
+                  ? 'bg-primary text-white dark:text-dark'
+                  : 'bg-primary/10 dark:bg-primary/20 text-primary hover:bg-primary/20 dark:hover:bg-primary/30'
+              }`}
+            >
+              {t('projects.filter_all')}
+            </button>
+            {allTags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => handleSelectTag(tag)}
+                className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors duration-300 ${
+                  selectedTag === tag
+                    ? 'bg-primary text-white dark:text-dark'
+                    : 'bg-primary/10 dark:bg-primary/20 text-primary hover:bg-primary/20 dark:hover:bg-primary/30'
+                }`}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.slice(0, visibleCount).map((project, index) => (
+          {filteredProjects.slice(0, visibleCount).map((project, index) => (
             <div key={index} className="bg-white dark:bg-dark rounded-xl overflow-hidden shadow-lg dark:shadow-xl card-hover flex flex-col border border-gray-100 dark:border-transparent">
               {project.img && (
                 <div className="w-full h-48 overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
@@ -67,6 +141,21 @@ export default function ProjectSection() {
                   <span className="text-xs bg-primary/10 dark:bg-primary/20 text-primary px-2 py-1 rounded-full font-medium">
                     {formatDisplayDate(project.start_month)} - {formatDisplayDate(project.end_month)}
                   </span>
+                  <button
+                    type="button"
+                    onClick={() => handleLike(project)}
+                    disabled={likedIds.has(String(project.id))}
+                    className={`flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full transition-colors duration-300 ${
+                      likedIds.has(String(project.id))
+                        ? 'text-red-500 cursor-default'
+                        : 'text-slate-400 hover:text-red-500'
+                    }`}
+                    aria-label={t('projects.like')}
+                    title={t('projects.like')}
+                  >
+                    {likedIds.has(String(project.id)) ? <FaHeart /> : <FaRegHeart />}
+                    <span>{project.likes || 0}</span>
+                  </button>
                 </div>
               <h3 className="text-xl font-semibold mb-3 text-primary">
                 {project.project_name}
@@ -111,7 +200,7 @@ export default function ProjectSection() {
           ))}
         </div>
 
-        {visibleCount < projects.length && (
+        {visibleCount < filteredProjects.length && (
           <div className="text-center mt-12">
             <button
               onClick={handleLoadMore}

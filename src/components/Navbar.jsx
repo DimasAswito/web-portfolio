@@ -40,6 +40,7 @@ export default function Navbar() {
     { to: 'education', label: t('navbar.education') },
     { to: 'experience', label: t('navbar.experience') },
     { to: 'projects', label: t('navbar.projects') },
+    { to: 'guestbook', label: t('navbar.guestbook') },
     { to: 'contact', label: t('navbar.contact') },
   ];
 

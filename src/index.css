@@ -180,3 +180,22 @@ html.dark #particle-background {
             height: 2px;
             background: linear-gradient(90deg, transparent, rgba(56, 182, 255, 0.7), transparent);
         }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }

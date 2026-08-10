@@ -5,6 +5,7 @@
     "education": "Education",
     "experience": "Experience",
     "projects": "Projects",
+    "guestbook": "Guestbook",
     "contact": "Contact",
     "toggle_theme": "Toggle theme",
     "toggle_language": "Toggle language",
@@ -20,8 +21,12 @@
   "about": {
     "title": "About Me",
     "techStackTitle": "My Tech Stack",
+    "skillsTitle": "My Skills",
     "githubTitle": "My GitHub Contributions",
-    "githubLink": "Look my Github Profile"
+    "githubLink": "Look my Github Profile",
+    "githubRepos": "Repositories",
+    "githubFollowers": "Followers",
+    "githubFollowing": "Following"
   },
   "education": {
     "title": "Education",
@@ -33,13 +38,19 @@
   "projects": {
     "title": "My Projects",
     "view_project": "View Project",
-    "load_more": "View More Projects"
+    "load_more": "View More Projects",
+    "filter_all": "All",
+    "like": "Like this project"
   },
   "certificates": {
     "title": "Certificates & Achievements",
     "obtainedOn": "Obtained on",
     "viewCredential": "View Credential",
-    "loadMore": "Look other certificates"
+    "loadMore": "Look other certificates",
+    "viewLarger": "View larger",
+    "close": "Close",
+    "prev": "Previous certificate",
+    "next": "Next certificate"
   },
   "contact": {
     "title": "Get In Touch",
@@ -49,7 +60,9 @@
     "phone_label": "Phone",
     "location_label": "Location",
     "linkedin_label": "LinkedIn",
-    "loading": "Loading contact information..."
+    "loading": "Loading contact information...",
+    "copy_label": "Copy",
+    "copied_label": "Copied!"
   },
   "qna": {
     "title": "Send Me a Message",
@@ -57,7 +70,36 @@
     "name_placeholder": "Your Name",
     "email_placeholder": "Your Email",
     "message_placeholder": "Your Message",
-    "send_button": "Send Message"
+    "send_button": "Send Message",
+    "sending_button": "Sending...",
+    "success_message": "Message sent successfully!",
+    "error_message": "Failed to send message. Please try again.",
+    "validation_message": "Please fill in all fields!"
+  },
+  "guestbook": {
+    "title": "Guestbook",
+    "form_title": "Leave a Message",
+    "list_title": "Messages from Visitors",
+    "name_placeholder": "Your Name",
+    "message_placeholder": "Your Message",
+    "send_button": "Post Message",
+    "sending_button": "Posting...",
+    "success_message": "Thanks! Your message will appear once approved.",
+    "error_message": "Failed to post message. Please try again.",
+    "validation_message": "Please fill in all fields!",
+    "pending_note": "Messages are reviewed before they appear publicly.",
+    "loading": "Loading messages...",
+    "empty": "No messages yet. Be the first to leave one!"
+  },
+  "site_stats": {
+    "page_views": "Page views"
+  },
+  "easterEgg": {
+    "konami_message": "You found the secret code!"
+  },
+  "presence": {
+    "label": "Live viewers",
+    "count": "{{count}} watching now"
   },
   "footer": {
     "rights": "All rights reserved."

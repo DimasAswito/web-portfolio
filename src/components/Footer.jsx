@@ -1,11 +1,28 @@
-import React from 'react';
-import { FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa'; 
+import React, { useEffect, useState } from 'react';
+import { FaLinkedin, FaEnvelope, FaPhone, FaEye } from 'react-icons/fa';
 import { Link as ScrollLink } from 'react-scroll';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '../supabaseClient';
+import PresenceIndicator from './PresenceIndicator';
 
 export default function Footer() {
   const { t } = useTranslation();
-  const links = ['home', 'about', 'education', 'experience', 'projects', 'contact'];
+  const links = ['home', 'about', 'education', 'experience', 'projects', 'guestbook', 'contact'];
+  const [pageViews, setPageViews] = useState(null);
+
+  useEffect(() => {
+    const fetchPageViews = async () => {
+      const { data, error } = await supabase
+        .from('site_stats')
+        .select('value')
+        .eq('key', 'page_views')
+        .single();
+      if (!error && data) {
+        setPageViews(data.value);
+      }
+    };
+    fetchPageViews();
+  }, []);
 
   return (
     <footer className="py-8 bg-slate-200 dark:bg-dark border-t border-slate-300 dark:border-gray-800">
@@ -43,6 +60,15 @@ export default function Footer() {
         </div>
         <div className="mt-8 pt-8 border-t border-slate-300 dark:border-gray-800 text-center text-slate-500 dark:text-gray-500 text-sm">
           <p>&copy; {new Date().getFullYear()} Dimas Aswito. {t('footer.rights')}</p>
+          <div className="mt-2 flex items-center justify-center flex-wrap gap-x-4 gap-y-1 text-xs text-slate-400 dark:text-gray-600">
+            {pageViews !== null && (
+              <span className="flex items-center gap-1.5">
+                <FaEye />
+                <span>{t('site_stats.page_views')}: {pageViews.toLocaleString()}</span>
+              </span>
+            )}
+            <PresenceIndicator />
+          </div>
         </div>
       </div>
     </footer>

@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { useTranslation } from 'react-i18next';
+import { ActivityCalendar } from 'react-activity-calendar';
+import SkillsChart from './SkillsChart';
+import GithubStats from './GithubStats';
+import useInView from '../hooks/useInView';
+import { useTheme } from '../ThemeContext';
 
 const GITHUB_USERNAME = 'DimasAswito';
+
+const CALENDAR_THEME = {
+  light: ['#e2e8f0', '#bae6fd', '#7dd3fc', '#38bdf8', '#0ea5e9'],
+  dark: ['#1e293b', '#075985', '#0369a1', '#0284c7', '#38bdf8'],
+};
 
 const sampleTechStack = [
   { name: 'HTML5', logo_url: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg' },
@@ -19,12 +29,18 @@ const sampleTechStack = [
 
 export default function AboutSection() {
   const { t } = useTranslation();
-  
+  const { theme } = useTheme();
+  const [ref, isVisible] = useInView();
+
   const [about, setAbout] = useState({
     description: [],
     tags: [],
     tech_stack: [],
   });
+
+  const [contributions, setContributions] = useState([]);
+  const [contribLoading, setContribLoading] = useState(true);
+  const [contribError, setContribError] = useState(false);
 
   useEffect(() => {
     async function fetchAbout() {
@@ -43,6 +59,25 @@ export default function AboutSection() {
     fetchAbout();
   }, []);
 
+  useEffect(() => {
+    async function fetchContributions() {
+      setContribLoading(true);
+      setContribError(false);
+      try {
+        const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}`);
+        if (!res.ok) throw new Error(`Contributions API error: ${res.status}`);
+        const json = await res.json();
+        setContributions(Array.isArray(json.contributions) ? json.contributions : []);
+      } catch (err) {
+        console.error('Failed to fetch GitHub contributions:', err);
+        setContribError(true);
+      } finally {
+        setContribLoading(false);
+      }
+    }
+    fetchContributions();
+  }, []);
+
   const marqueeStyles = `
     @keyframes scroll {
       from { transform: translateX(0); }
@@ -56,7 +91,11 @@ export default function AboutSection() {
   return (
     <>
       <style>{marqueeStyles}</style>
-      <section id="about" className="py-20 overflow-hidden bg-slate-300 dark:bg-dark">
+      <section
+        id="about"
+        ref={ref}
+        className={`py-20 overflow-hidden bg-slate-300 dark:bg-dark reveal ${isVisible ? 'reveal-visible' : ''}`}
+      >
         <div className="container mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">{t('about.title')}</h2>
           
@@ -94,16 +133,37 @@ export default function AboutSection() {
             </div>
           </div>
           
+          <div className="w-full mb-20">
+            <h3 className="md:text-2xl font-bold mb-8 text-center gradient-text">{t('about.skillsTitle')}</h3>
+            <SkillsChart />
+          </div>
+
           <div className="flex flex-col items-center text-center">
             <h3 className="md:text-2xl font-bold mb-8 gradient-text">{t('about.githubTitle')}</h3>
-            <div className="w-full max-w-xl md:max-w-2xl lg:max-w-3xl px-4">
-              <img
-                className="w-full h-auto mx-auto"
-                src="https://raw.githubusercontent.com/DimasAswito/DimasAswito/output/snake.svg"
-                alt="Snake animation GitHub contributions"
-              />
+            <GithubStats />
+            <div className="w-full max-w-xl md:max-w-2xl lg:max-w-3xl px-4 overflow-x-auto">
+              {contribError ? (
+                <img
+                  className="w-full h-auto mx-auto"
+                  src="https://raw.githubusercontent.com/DimasAswito/DimasAswito/output/snake.svg"
+                  alt="Snake animation GitHub contributions"
+                />
+              ) : (
+                <div className="flex justify-center min-w-max mx-auto">
+                  <ActivityCalendar
+                    data={contributions}
+                    loading={contribLoading}
+                    colorScheme={theme === 'dark' ? 'dark' : 'light'}
+                    theme={CALENDAR_THEME}
+                    blockSize={11}
+                    blockMargin={3}
+                    fontSize={12}
+                    labels={{ totalCount: '{{count}} contributions in {{year}}' }}
+                  />
+                </div>
+              )}
             </div>
-            <h5 className="text-sm text-gray-600 dark:text-gray-500 mt-6"> 
+            <h5 className="text-sm text-gray-600 dark:text-gray-500 mt-6">
               <a href={`https://github.com/${GITHUB_USERNAME}`} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors duration-300">
                 {t('about.githubLink')}
               </a>

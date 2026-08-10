@@ -5,6 +5,7 @@
     "education": "Pendidikan",
     "experience": "Pengalaman",
     "projects": "Proyek",
+    "guestbook": "Buku Tamu",
     "contact": "Kontak",
     "toggle_theme": "Ubah tema",
     "toggle_language": "Ubah bahasa",
@@ -20,8 +21,12 @@
   "about": {
     "title": "Tentang Saya",
     "techStackTitle": "Teknologi yang Saya Gunakan",
+    "skillsTitle": "Keahlian Saya",
     "githubTitle": "Kontribusi GitHub Saya",
-    "githubLink": "Lihat Profil Github Saya"
+    "githubLink": "Lihat Profil Github Saya",
+    "githubRepos": "Repositori",
+    "githubFollowers": "Pengikut",
+    "githubFollowing": "Mengikuti"
   },
   "education": {
     "title": "Pendidikan",
@@ -33,13 +38,19 @@
   "projects": {
     "title": "Proyek Saya",
     "view_project": "Lihat Proyek",
-    "load_more": "Lihat Proyek Lainnya"
+    "load_more": "Lihat Proyek Lainnya",
+    "filter_all": "Semua",
+    "like": "Sukai proyek ini"
   },
   "certificates": {
     "title": "Sertifikat & Pencapaian",
     "obtainedOn": "Diperoleh pada",
     "viewCredential": "Lihat Kredensial",
-    "loadMore": "Lihat sertifikat lainnya"
+    "loadMore": "Lihat sertifikat lainnya",
+    "viewLarger": "Lihat lebih besar",
+    "close": "Tutup",
+    "prev": "Sertifikat sebelumnya",
+    "next": "Sertifikat berikutnya"
   },
   "contact": {
     "title": "Hubungi Saya",
@@ -49,7 +60,9 @@
     "phone_label": "Telepon",
     "location_label": "Lokasi",
     "linkedin_label": "LinkedIn",
-    "loading": "Memuat informasi kontak..."
+    "loading": "Memuat informasi kontak...",
+    "copy_label": "Salin",
+    "copied_label": "Tersalin!"
   },
   "qna": {
     "title": "Kirim Saya Pesan",
@@ -57,7 +70,36 @@
     "name_placeholder": "Nama Anda",
     "email_placeholder": "Email Anda",
     "message_placeholder": "Pesan Anda",
-    "send_button": "Kirim Pesan"
+    "send_button": "Kirim Pesan",
+    "sending_button": "Mengirim...",
+    "success_message": "Pesan berhasil dikirim!",
+    "error_message": "Gagal mengirim pesan. Silakan coba lagi.",
+    "validation_message": "Mohon isi semua kolom!"
+  },
+  "guestbook": {
+    "title": "Buku Tamu",
+    "form_title": "Tinggalkan Pesan",
+    "list_title": "Pesan dari Pengunjung",
+    "name_placeholder": "Nama Anda",
+    "message_placeholder": "Pesan Anda",
+    "send_button": "Kirim Pesan",
+    "sending_button": "Mengirim...",
+    "success_message": "Terima kasih! Pesan Anda akan tampil setelah disetujui.",
+    "error_message": "Gagal mengirim pesan. Silakan coba lagi.",
+    "validation_message": "Mohon isi semua kolom!",
+    "pending_note": "Pesan akan ditinjau terlebih dahulu sebelum tampil ke publik.",
+    "loading": "Memuat pesan...",
+    "empty": "Belum ada pesan. Jadilah yang pertama meninggalkan pesan!"
+  },
+  "site_stats": {
+    "page_views": "Kunjungan halaman"
+  },
+  "easterEgg": {
+    "konami_message": "Kamu menemukan kode rahasia!"
+  },
+  "presence": {
+    "label": "Pengunjung aktif",
+    "count": "{{count}} sedang melihat"
   },
   "footer": {
     "rights": "Hak cipta dilindungi."

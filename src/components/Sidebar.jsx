@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { LogOut, LayoutDashboard, Image, Info, GraduationCap, Briefcase, Folder, Mail, HelpCircle, List } from "lucide-react"
+import { LogOut, LayoutDashboard, Image, Info, GraduationCap, Briefcase, Folder, Mail, HelpCircle, List, Star, MessageSquare } from "lucide-react"
 // import { Button } from "@/components/ui/button"
 import { Link, useLocation } from "react-router-dom"
 import { supabase } from '../supabaseClient';
@@ -10,10 +10,12 @@ const navItems = [
   { name: "About", path: "/admin/about", icon: <Info size={18} /> },
   { name: "Education", path: "/admin/education", icon: <GraduationCap size={18} /> },
   { name: "Experience", path: "/admin/experience", icon: <Briefcase size={18} /> },
+  { name: "Skill", path: "/admin/skill", icon: <Star size={18} /> },
   { name: "Project", path: "/admin/project", icon: <Folder size={18} /> },
   { name: "Certificate", path: "/admin/certificate", icon: <List size={18} /> },
   { name: "Contact", path: "/admin/contact", icon: <Mail size={18} /> },
   { name: "QnA", path: "/admin/qna", icon: <HelpCircle size={18} /> },
+  { name: "Guestbook", path: "/admin/guestbook", icon: <MessageSquare size={18} /> },
 ]
 
 export default function Sidebar() {

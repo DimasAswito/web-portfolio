@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { useTranslation } from 'react-i18next';
 import { FaCode } from 'react-icons/fa';
+import useInView from '../hooks/useInView';
 
 export default function ExperienceSection() {
   const { t } = useTranslation();
+  const [ref, isVisible] = useInView();
   const [experiences, setExperiences] = useState([]);
 
   const formatDisplayDate = (dateString) => {
@@ -80,7 +82,11 @@ const ExperienceCard = ({ exp }) => (
 );
 
   return (
-    <section id="experience" className="py-20 bg-slate-300 dark:bg-dark">
+    <section
+      id="experience"
+      ref={ref}
+      className={`py-20 bg-slate-300 dark:bg-dark reveal ${isVisible ? 'reveal-visible' : ''}`}
+    >
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center gradient-text">{t('experience.title')}</h2>
         

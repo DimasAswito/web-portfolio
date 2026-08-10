@@ -67,7 +67,15 @@ export default function AboutSection() {
         const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}`);
         if (!res.ok) throw new Error(`Contributions API error: ${res.status}`);
         const json = await res.json();
-        setContributions(Array.isArray(json.contributions) ? json.contributions : []);
+        const rawContributions = Array.isArray(json.contributions) ? json.contributions : [];
+        // The API returns entries newest-year-first (not strictly chronological),
+        // but ActivityCalendar derives its date range from the first/last array
+        // items, so an unsorted array can hand it an inverted (end-before-start)
+        // range and crash with "RangeError: Invalid interval".
+        const sortedContributions = [...rawContributions].sort(
+          (a, b) => new Date(a.date) - new Date(b.date)
+        );
+        setContributions(sortedContributions);
       } catch (err) {
         console.error('Failed to fetch GitHub contributions:', err);
         setContribError(true);
